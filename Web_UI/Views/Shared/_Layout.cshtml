@@ -1,4 +1,6 @@
 ﻿@using Entities.Concrete;
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -104,11 +106,6 @@
    </header>
 
 
-
-
-
-
-
    <div class="modal fade" id="notifimodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-dialog" style="margin-right:0px" role="document">
          <div class="modal-content" style="background-color:mediumpurple;color:white">
@@ -124,9 +121,6 @@
    </div>
 
 
-
-
-
    <center>
       <div class="form-group col-md-7" style="background-color:white;color:black">
          <form method="get" action="/Product/Aramasonuc/">
@@ -139,8 +133,6 @@
          </div>
       </div>
    </center>
-
-
 
 
    <div class="container col-md-12">
@@ -163,12 +155,10 @@
 
 
 
-
-
    <footer class="border-top footer text-muted">
-      <div class="container">
+    @*  <div class="container">
          &copy; 2024 - Web_UI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-      </div>
+      </div>*@
    </footer>
 
 
@@ -228,8 +218,8 @@
                   let tablehtml;
                   $.each(w, (index, value) => {
                      tablehtml += `
-                <a class="btn btn-sm border-0 btn-outline-secondary" href="/Product/Aramasonuc?urunad=${value.Name}">${value.Name}</a>
-                                                                                                                  `
+                                  <a class="btn btn-sm border-0 btn-outline-secondary" href="/Product/Aramasonuc?urunad=${value.Name}">${value.Name}</a>
+                                                                                                                                    `
                   });
                   $("#filterlist").html(tablehtml);
                }
@@ -245,10 +235,15 @@
 
 
 
+
+   <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+   <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-   @*<script src="~/jquery/jquery.min.js"></script>*@
-   <script src="~/lib/jquery/dist/jquery.min.js"></script>
+   <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+
+
+   @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
    <script src="~/js/site.js" asp-append-version="true"></script>

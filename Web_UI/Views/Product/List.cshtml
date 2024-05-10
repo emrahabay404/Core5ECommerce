@@ -1,21 +1,24 @@
 ﻿@model IEnumerable<Product>
-
-
 @using Entities.Concrete;
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 
 
-
 @*@using X.PagedList
 @using X.PagedList.Mvc.Core*@
+
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css" />
 
 
 @{
    ViewData["Title"] = "List";
    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
 
 <h5>
    <i class="fa fa-building">&nbsp;Mağazanız : @UserManager.GetUserAsync(User).Result.NameSurname</i>
@@ -48,14 +51,16 @@
 
    <center style="font-family:'Segoe UI'" class="text-center">
       <div class="container col-md-12">
-         <table class="table table-sm table-hover" id="tablem">
-            <tr>
-               <td>Görsel</td>
-               <td>Ürün Adı</td>
-               <td>Fiyat</td>
-               <td>Stok (Adet)</td>
-               <td>İşlemler</td>
-            </tr>
+         <table class="col-md-12 table table-sm table-hover" id="tablem">
+            <thead>
+               <tr>
+                  <td>Görsel</td>
+                  <td>Ürün Adı</td>
+                  <td>Fiyat</td>
+                  <td>Stok (Adet)</td>
+                  <td>İşlemler</td>
+               </tr>
+            </thead>
             <tbody id="verim">
                @foreach (var item in Model)
                {
@@ -73,7 +78,8 @@
                         {
                            <a href="#" data-id="@item.ProductId" data-name="@item.Name" class="btn btn-success btn-sm" id="delbtnprd">Yayında&nbsp; <i class="fa fa-check"></i></a>
                         }
-                        <button class="btn btn-primary btn-sm" data-target="#modal1" data-toggle="modal" data-id="@item.ProductId" id="editbtnprd" type="button">Düzenle&nbsp;<i class="fa fa-edit"></i></button>
+                        @*<button class="btn btn-primary btn-sm" data-target="#modal1" data-toggle="modal" data-id="@item.ProductId" id="editbtnprd" type="button">Düzenle&nbsp;<i class="fa fa-edit"></i></button>*@
+                        <a href="/Product/ProductEdit/@item.ProductId" class="btn btn-primary btn-sm">Düzenle&nbsp;<i class="fa fa-edit"></i></a>
                         <button class="btn btn-info btn-sm" data-name="@item.Name" data-target="#modal2" data-toggle="modal" data-id="@item.ProductId" id="editphotobtn" type="button">Görseller&nbsp;<i class="fa fa-arrow-right"></i></button>
                      </td>
                   </tr>
@@ -87,7 +93,13 @@
 
 
 
+
 <script type="text/javascript">
+
+
+   $(document).ready(function () {
+      $("#tablem").DataTable();
+   });
 
 
    $(document).on("click", "#btnupd", function () {
@@ -97,7 +109,7 @@
 
    $(document).on("click", "#editbtnprd", function () {
       var datid = $(this).data("id");
-         $('#productedit').load('@Url.Action("ProductEdit", "Product")?id=' + datid);
+      $('#productedit').load('@Url.Action("ProductEdit", "Product")?id=' + datid);
    });
 
 
@@ -146,7 +158,6 @@
             $("form")[1].reset();
             $("form")[2].reset();
             $("#urneklemdl").modal("hide");
-
          }
       };
       if ($(formdata).attr('enctype') == "multipart/form-data") {
@@ -160,7 +171,6 @@
 
 
 </script>
-
 
 
 

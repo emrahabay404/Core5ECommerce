@@ -43,7 +43,7 @@ namespace Web_UI.Controllers
       [AllowAnonymous]
       public IActionResult Index()
       {
-               
+
          //return View(productRepo.TList());
          return View(productRepo.TList().OrderBy(x => Guid.NewGuid()).ToList());
       }

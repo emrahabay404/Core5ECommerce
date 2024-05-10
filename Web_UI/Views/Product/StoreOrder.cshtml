@@ -2,15 +2,12 @@
 @model IEnumerable<OrderDetail>
 
 
-
 @{
-    ViewData["Title"] = "StoreOrder";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+   ViewData["Title"] = "StoreOrder";
+   Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <center>    <h4>Gelen Siparişlerim <i class="fa fa-address-card"></i>   </h4>    </center>
-
 
 <a class="btn btn-sm btn-primary" href="/Product/List/">Mağazama Ait Ürünlerime Git&nbsp; <i class="fa  fa-list-alt"></i></a>
 <button id="btnrefresh" class="btn btn-sm  btn-info">Tabloyu Yenile&nbsp; <i class="fa fa-refresh"></i> </button>
@@ -18,41 +15,39 @@
 <br />
 
 
-
-
 <table id="tablem" class="table-sm text-center table  table-hover ">
-    <tr>
-        <td>Görsel</td>
-        <td>Sipariş Ürün</td>
-        <td>Kargo Firması</td>
-        <td>Adet</td>
-        <td>Süreç</td>
-        <td>İşlemler</td>
-    </tr>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                              
-                <td style="width:7%"><img width="30" height="30" src="@item.Product.PhotoUrl" /></td>
-                <td> <a href="/Product/Detay/@item.ProductId">@item.Product.Name.Substring(0, 10) ... </a></td>
-                <td><img src="@item.Cargo.CargoLogo" width="75" height="38" /> </td>
-                <td>@item.Quantity</td>
-                <td> <img src="@item.OrderProcess.OrderProcessImg" width="30" height="25" /> @item.OrderProcess.OrderProcessType </td>
-                <td>
-                    @if (item.OrderProcessID == 13 ||item.OrderProcessID==7 || item.OrderProcessID ==9  || item.OrderProcessID == 11 || item.OrderProcessID == 12)
-                    {
+   <tr>
+      <td>Görsel</td>
+      <td>Sipariş Ürün</td>
+      <td>Kargo Firması</td>
+      <td>Adet</td>
+      <td>Süreç</td>
+      <td>İşlemler</td>
+   </tr>
+   <tbody>
+      @foreach (var item in Model)
+      {
+         <tr>
 
-                        @*<button disabled="disabled" data-name="@item.Product.Name" data-quan="@item.Quantity" data-id="@item.OrderDetailId" class="btn btn-sm btn-primary" data-target="#modal2" data-toggle="modal" id="orderedit">Sipariş İşlemleri&nbsp;<i class="fa fa-cog"></i></button>*@
-                    }
-                    else
-                    {
-                        <a href="#" data-name="@item.Product.Name" data-quan="@item.Quantity" data-id="@item.OrderDetailId" class="btn btn-sm btn-primary" data-target="#modal2" data-toggle="modal" id="orderedit">Sipariş İşlemleri&nbsp;<i class="fa fa-cog"></i></a>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
+            <td style="width:7%"><img width="30" height="30" src="@item.Product.PhotoUrl" /></td>
+            <td> <a href="/Product/Detay/@item.ProductId">@item.Product.Name.Substring(0, 10) ... </a></td>
+            <td><img src="@item.Cargo.CargoLogo" width="75" height="38" /> </td>
+            <td>@item.Quantity</td>
+            <td> <img src="@item.OrderProcess.OrderProcessImg" width="30" height="25" /> @item.OrderProcess.OrderProcessType </td>
+            <td>
+               @if (item.OrderProcessID == 13 || item.OrderProcessID == 7 || item.OrderProcessID == 9 || item.OrderProcessID == 11 || item.OrderProcessID == 12)
+               {
+
+                  @*<button disabled="disabled" data-name="@item.Product.Name" data-quan="@item.Quantity" data-id="@item.OrderDetailId" class="btn btn-sm btn-primary" data-target="#modal2" data-toggle="modal" id="orderedit">Sipariş İşlemleri&nbsp;<i class="fa fa-cog"></i></button>*@
+               }
+               else
+               {
+                  <a href="#" data-name="@item.Product.Name" data-quan="@item.Quantity" data-id="@item.OrderDetailId" class="btn btn-sm btn-primary" data-target="#modal2" data-toggle="modal" id="orderedit">Sipariş İşlemleri&nbsp;<i class="fa fa-cog"></i></a>
+               }
+            </td>
+         </tr>
+      }
+   </tbody>
 </table>
 
 
@@ -63,19 +58,18 @@
 
 
 <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog" style="width:100%" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ordermodalhead"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="ordersedit">
-
-            </div>
-        </div>
-    </div>
+   <div class="modal-dialog" style="width:100%" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="ordermodalhead"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body" id="ordersedit">
+         </div>
+      </div>
+   </div>
 </div>
 
 
@@ -84,19 +78,17 @@
 
 <script type="text/javascript">
 
-    $(document).on("click", "#btnrefresh", function () {
-        $("#tablem").load(window.location.href + " #tablem");
-    });
+   $(document).on("click", "#btnrefresh", function () {
+      $("#tablem").load(window.location.href + " #tablem");
+   });
 
+   $(document).on("click", "#orderedit", function () {
+      var datid = $(this).data("id");
+      var dataname = $(this).data("name");
+      var dataquan = $(this).data("quan");
 
-    $(document).on("click", "#orderedit", function () {
-        var datid = $(this).data("id");
-        var dataname = $(this).data("name");
-        var dataquan = $(this).data("quan");
-
-        document.getElementById("ordermodalhead").innerHTML =datid+" Numaralı "+ dataquan + " Adet " + dataname + " Sipariş İşlemleri";
-        $('#ordersedit').load('@Url.Action("StoreOrderDetail", "Product")?id=' + datid);
-    });
-
+      document.getElementById("ordermodalhead").innerHTML = datid + " Numaralı " + dataquan + " Adet " + dataname + " Sipariş İşlemleri";
+      $('#ordersedit').load('@Url.Action("StoreOrderDetail", "Product")?id=' + datid);
+   });
 
 </script>
