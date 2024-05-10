@@ -1,49 +1,257 @@
-﻿<!DOCTYPE html>
+﻿@using Entities.Concrete;
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Web_UI</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Web_UI.styles.css" asp-append-version="true" />
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>@ViewData["Title"] - Web_UI</title>
+   <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+   <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+   <link rel="stylesheet" href="~/Web_UI.styles.css" asp-append-version="true" />
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Web_UI</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - Web_UI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
+   <header style="background-color:ghostwhite">
+
+
+      @if (Globals.LoginStatus == 1)
+      {
+         <nav class="navbar navbar-expand-md p-2 navbar-dark bg-dark">
+
+            <img src="https://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/Shopping-bag-icon.png" width="75" height="75" />
+
+            <a style="font-size:x-large" class="navbar-brand" href="#">&nbsp; E-Commerce | </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+               <ul style="font-size:large" class="navbar-nav mr-auto">
+                  <li class="nav-item">
+                     <a class="nav-link" href="/Favourite/FavList/"> <i class="fa fa-heart"></i> Favorilerim</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="/Order/Orderlist/"> <i class="fa fa-credit-card"></i> Siparişlerim </a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="/Product/List/"><i class="fa fa-building"></i> Satıcı & Mağaza  </a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="/Login/Account/"> <i class="fa fa-user"></i> Hesabım </a>
+                  </li>
+
+                  <li class="nav-item">
+                     <a class="nav-link" data-target="#notifimodal" id="btnnotifi" data-toggle="modal" href=""> <i class="fa fa-bell"></i> Bildirimler  </a>
+                  </li>
+               </ul>
+               <form class="form-inline my-2 my-lg-0">
+                  <a id="logoutbtn" href="#" class="btn border-0 btn-outline-light my-2 my-sm-0" type="button">Çıkış Yap&nbsp;<i class="fa fa-sign-out"></i></a>
+               </form>
+
+            </div>
+
+         </nav>
+      }
+
+      else
+      {
+         <nav class="navbar navbar-expand-md p-2 navbar-dark bg-dark">
+            <img src="https://icons.iconarchive.com/icons/graphicloads/colorful-long-shadow/256/Shopping-bag-icon.png" width="75" height="75" />
+            <a style="font-size:x-large" class="navbar-brand" href="#">&nbsp; E-Commerce | </a>
+         </nav>
+      }
+
+
+      <nav class="navbar navbar-expand navbar-toggleable navbar-primary border-bottom box-shadow mb-3">
+         <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between navbar-left ">
+               <ul class="navbar-nav flex-grow-1">
+                  <li class="nav-item">
+                     <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index"><img src="~/images/solimg/54.png" width="25" height="25" /> Ürünler</a>
+                  </li>
+
+                  <li class="nav-item" id="sepet">
+                     <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index"><img src="~/images/solimg/41.png" width="25" height="25" /> Sepetim</a>
+                  </li>
+                  @if (Globals.LoginStatus == 0)
+                  {
+                     <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index"><img src="~/images/solimg/945.png" width="20" height="20" /> Giriş Yap</a>
+                     </li>
+                  }
+
+                  <li class="nav-item">
+                     <a class="nav-link text-dark" href="/Login/InfoHelp/"><img src="~/images/solimg/454.jpg" width="25" height="25" /> Yardım</a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </nav>
+
+
+   </header>
+
+
+
+
+
+
+
+   <div class="modal fade" id="notifimodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog" style="margin-right:0px" role="document">
+         <div class="modal-content" style="background-color:mediumpurple;color:white">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-body">
+               <div id="notifidetail">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+
+
+
+
+   <center>
+      <div class="form-group col-md-7" style="background-color:white;color:black">
+         <form method="get" action="/Product/Aramasonuc/">
+            <div class="input-group">
+               <input type="text" required maxlength="100" minlength="3" name="urunad" placeholder="Ürün, kategori veya marka arayın" style="border:ridge" class="form-control" id="txtara" />
+               <button type="submit" id="arabtn" class=" btn btn-success">Ara</button>
+            </div>
+         </form>
+         <div id="filterlist" class="list-group" style="margin-left:0px">
+         </div>
+      </div>
+   </center>
+
+
+
+
+   <div class="container col-md-12">
+      <div id="overlay" style="width:100%;height:100%">
+         <div class="cv-spinner">
+            <span class="spinner"></span>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-lg-2" style="font-family: 'Segoe UI'; background-color: ghostwhite">
+            <div style="margin-left:5px;margin-top:0px; color: black">
+               @await Component.InvokeAsync("CategoryList")
+            </div>
+         </div>
+         <div class="col-lg-9" style="margin-left:60px">
+            @RenderBody()
+         </div>
+      </div>
+   </div>
+
+
+
+
+
+   <footer class="border-top footer text-muted">
+      <div class="container">
+         &copy; 2024 - Web_UI - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+      </div>
+   </footer>
+
+
+   <script type="text/javascript">
+
+      $(document).on("click ", "#btnnotifi", function () {
+         $('#notifidetail').load('@Url.Action("Allnotifi", "Login")');
+         $("#notifimodal").modal("show");
+      });
+
+
+      $(document).on("click", "#logoutbtn", function () {
+         swal({
+            title: "",
+            text: "Sistemden Çıkmak İstediğinize Emin Misiniz?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+         })
+            .then((willDelete) => {
+               if (willDelete) {
+                  $.ajax({
+                     type: "get",
+                     url: "/Login/Logout/",
+                     success: function (funk) {
+                        swal("Çıkış Yapıldı.")
+                           .then((value) => {
+                              window.location.href = "@Url.Action("Index", "Product")";
+                           });
+                     }
+                  });
+               }
+            });
+
+      });
+
+
+      $(document).ready(function () {
+         $(document).click(function (e) {
+            $("#sepet").load('@Url.Action("CartCount","Cart")');
+         });
+         $("#sepet").load('@Url.Action("CartCount","Cart")');
+      });
+
+
+      $("#txtara").on("keyup", function () {
+         if (document.getElementById('txtara').value != "") {
+            $("#filterlist").html("");
+            var urn = $(this).val();
+            $.getJSON({
+               contentType: "application/json",
+               dataType: "json",
+               type: "get",
+               url: "/Product/Aramafilter?urunad=" + urn,
+               success: function (funk) {
+                  let w = jQuery.parseJSON(funk);
+                  let tablehtml;
+                  $.each(w, (index, value) => {
+                     tablehtml += `
+                <a class="btn btn-sm border-0 btn-outline-secondary" href="/Product/Aramasonuc?urunad=${value.Name}">${value.Name}</a>
+                                                                                                                  `
+                  });
+                  $("#filterlist").html(tablehtml);
+               }
+            });
+         }
+         else {
+            $("#filterlist").html("");
+         }
+      });
+
+
+   </script>
+
+
+
+   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+   @*<script src="~/jquery/jquery.min.js"></script>*@
+   <script src="~/lib/jquery/dist/jquery.min.js"></script>
+   <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+   <script src="~/js/site.js" asp-append-version="true"></script>
+   @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

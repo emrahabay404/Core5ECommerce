@@ -1,0 +1,26 @@
+﻿@using Entities.Concrete;
+
+
+
+@model IEnumerable<Brand>
+
+
+
+
+<center>
+    <div class="container col-md-12 mt-0">
+        <div class="row mb-5" id="productlist">
+            @foreach (var item in Model)
+            {
+                <div class="card col-sm-1 m-1 p-2">
+                    <a class="btn btn-sm" href="/Product/BrandProductList/@item.BrandID"
+                       style="text-align:center;color:black;background-color:ghostwhite">
+                        <img src="@item.Brandlogo" width="40" height="40" /><br /><br />
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</center>
+
+

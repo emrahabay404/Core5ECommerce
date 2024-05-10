@@ -6,10 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using System;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace Web_UI.Controllers
 {
@@ -46,8 +43,7 @@ namespace Web_UI.Controllers
       [AllowAnonymous]
       public IActionResult Index()
       {
-        
-        
+               
          //return View(productRepo.TList());
          return View(productRepo.TList().OrderBy(x => Guid.NewGuid()).ToList());
       }

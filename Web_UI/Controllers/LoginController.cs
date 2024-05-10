@@ -8,13 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Net.Mail;
 
-
 namespace Web_UI.Controllers
 {
-
    public class LoginController : Controller
    {
-
       private bool Durum;
       private UserManager<AppUser> _userManager;
       private SignInManager<AppUser> _signInManager;
@@ -28,15 +25,6 @@ namespace Web_UI.Controllers
          _signInManager = signInManager;
       }
 
-
-      //int Userid = (int)_userManager.GetUserAsync(User).Result.Id;
-      //var ara = C.UserRoles.Where(x => x.UserId == Userid && x.RoleId == 3);
-      //    if (ara != null)
-      //    {
-      //        Globals.isStore = true;
-      //    }
-
-
       [AllowAnonymous]
       [Route("/Account/Login")]
       [HttpGet]
@@ -49,18 +37,17 @@ namespace Web_UI.Controllers
             Email = "deneme@email.com",
             ImageUrl = "base64000000000.com",
             About = "",
-           EmailConfirmed = true,
+            EmailConfirmed = true,
          };
          var result = _userManager.CreateAsync(sa, "Ea123.*");
          if (result.Result.Succeeded)
          {
-               
+
          }
 
 
          return View();
       }
-
 
       [HttpPost]
       [AllowAnonymous]
@@ -83,11 +70,6 @@ namespace Web_UI.Controllers
          return Json(Durum);
       }
 
-
-
-
-
-
       [HttpGet]
       public IActionResult Allnotifi()
       {
@@ -98,8 +80,6 @@ namespace Web_UI.Controllers
          var getnotifi = C.Notifications.OrderByDescending(x => x.NotifiDate).Include(x => x.NotifiType).Where(x => x.Id == userid).Take(5).ToList();
          return View(getnotifi);
       }
-
-
 
       [HttpGet]
       public IActionResult Allnotififull()
@@ -119,7 +99,6 @@ namespace Web_UI.Controllers
          return View(getnotifi);
       }
 
-
       [HttpGet]
       public IActionResult Notifiremove(int id)
       {
@@ -128,8 +107,6 @@ namespace Web_UI.Controllers
          C.SaveChanges();
          return Redirect("/Login/Allnotififull/");
       }
-
-
 
       [HttpGet]
       [AllowAnonymous]
@@ -141,12 +118,9 @@ namespace Web_UI.Controllers
          return RedirectToAction("Index", "Product");
       }
 
-
-
       [HttpGet]
       [AllowAnonymous]
       public IActionResult Signup() { return View(); }
-
 
       [HttpPost]
       [AllowAnonymous]
@@ -190,8 +164,6 @@ namespace Web_UI.Controllers
          return View();
       }
 
-
-
       [AllowAnonymous]
       public IActionResult Page404()
       {
@@ -205,14 +177,11 @@ namespace Web_UI.Controllers
          return View();
       }
 
-
       [AllowAnonymous]
       public IActionResult InfoHelp()
       {
          return View();
       }
-
-
 
       [HttpGet]
       [Authorize(Roles = "admin,user,seller")]
@@ -244,8 +213,6 @@ namespace Web_UI.Controllers
          var getuser = C.Users.Where(x => x.Id == userid).FirstOrDefault();
          return View(getuser);
       }
-
-
 
       //string subject, string mailadres
       [HttpPost]
@@ -281,7 +248,6 @@ namespace Web_UI.Controllers
 
       }
 
-
       [HttpPost]
       [Authorize(Roles = "admin,user,seller")]
       public async Task<IActionResult> Userupdate(AppUser apu)
@@ -303,7 +269,6 @@ namespace Web_UI.Controllers
          }
 
       }
-
 
       [HttpPost]
       public async Task<IActionResult> Newpassword(Passwordchange pwd)
@@ -329,8 +294,6 @@ namespace Web_UI.Controllers
          }
          return Json("");
       }
-
-
 
       [HttpPost]
       //[Authorize(Roles = "user")]
@@ -358,7 +321,6 @@ namespace Web_UI.Controllers
          return Redirect("/Login/Account/");
       }
 
-
       [HttpGet]
       public IActionResult CancelSellerRequest()
       {
@@ -379,9 +341,6 @@ namespace Web_UI.Controllers
          return Redirect("/Login/Account/");
       }
 
-
-
-
       [HttpGet]
       public IActionResult AddressList()
       {
@@ -397,8 +356,6 @@ namespace Web_UI.Controllers
          _AddressRepo.TAdd(adr);
          return Redirect("/Login/Account/");
       }
-
-
 
       [HttpPost]
       [Authorize(Roles = "user,seller")]

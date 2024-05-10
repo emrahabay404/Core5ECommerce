@@ -1,0 +1,43 @@
+﻿@using Entities.Concrete;
+@model IEnumerable<Notification>
+
+@{
+   Layout = null;
+}
+
+
+<div class="container">
+   <h4>
+      <i class="fa fa-bell"></i> Bildirimler  @if (ViewBag.newnotifi > 0)
+      {
+         <br />
+         <small>@ViewBag.newnotifi Yeni bildirim</small>
+      }
+   </h4>
+   <br />
+   @if (Model.Count() < 1)
+   {
+      <small>Bildirim yok</small>
+   }
+   else
+   {
+      @foreach (var item in Model)
+      {
+         @if (item.SeenStatus == false)
+         {
+            <p>
+               <img src="@item.NotifiType.NotifiTypeImg" width="25" height="25" /> @item.NotifiType.NotifiTypeName &nbsp; [<img src="https://icons.veryicon.com/png/o/internet--web/property-2/closed-eyes.png" width="25" height="25" />]
+            </p>
+         }
+         else
+         {
+            <p>
+               <img src="@item.NotifiType.NotifiTypeImg" width="25" height="25" /> @item.NotifiType.NotifiTypeName &nbsp;  [<img src="https://cdn-icons-png.flaticon.com/512/5062/5062897.png" width="25" height="25" />]
+            </p>
+         }
+      }
+      <br />
+      <a style="color:white" href="/Login/Allnotififull/">Tümünü Gör</a>
+   }
+</div>
+

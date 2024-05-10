@@ -1,0 +1,60 @@
+﻿@using Entities.Concrete;
+
+@model IEnumerable<Category>
+
+
+
+<a href="#" class="btn btn-sm btn-light"> <img width="30" height="30" src="https://w7.pngwing.com/pngs/423/371/png-transparent-discounts-and-allowances-computer-icons-coupon-sale-miscellaneous-text-logo.png" /> İndirimli Ürünler</a>
+<a href="#" class="btn btn-sm btn-light"> <img width="30" height="30" src="https://cdn.iconscout.com/icon/free/png-256/product-135-781070.png" /> En Çok Satanlar</a>
+<a href="#" class="btn btn-sm btn-light"> <img width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1896/1896820.png" /> Kargo Bedava</a>
+<a href="#" class="btn btn-sm btn-light"> <img width="30" height="30" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJAVscTAi4KV-lDqYyFZJuDP7zctLFFs0Gkw&usqp=CAU" /> En Yüksek Puanlı</a>
+
+
+<hr />
+
+<div id="catlist" class="text-center">
+    @foreach (var item in Model)
+    {
+        <button data-id="@item.CategoryID" type="button" id="catgbtn" class="btn-sm btn-light btn">➥&nbsp;@item.CategoryName</button>
+    }
+    <hr />
+
+    <small>Alt Kategoriler</small>
+    <div id="subcatlist">
+
+    </div>
+</div>
+
+
+
+
+@*
+
+<script type="text/javascript" language="javascript">
+
+    $("#catlist").on("click", "#catgbtn", function () {
+        /* $("#catgbtn").click(function () {*/
+        $("#subcatlist").html("");
+        var id = $(this).data("id");
+        $.getJSON({
+            type: "get",
+            url: "/Category/SubCatList?id=" + id,
+            contentType: "application/json",
+            dataType: "json",
+            success: function (funk) {
+                let w = jQuery.parseJSON(funk);
+                let tablehtml;
+                $.each(w, (index, value) => {
+                    tablehtml += `
+                                    <a class="btn btn-sm border-0 btn-light" href="/Category/SubCatListID/${value.SubCatID}"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Eo_circle_orange_blank.svg/768px-Eo_circle_orange_blank.svg.png" width="10" height="10" />${value.SubCatName}</a>
+                                    `
+                    //adet++;
+                });
+                $("#subcatlist").html(tablehtml);
+            }
+        });
+    });
+
+</script>
+
+*@

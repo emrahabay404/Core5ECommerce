@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="auth-wrapper col-md-8">
+   <div class="auth-content text-center">
+      <img src="#" alt="" class="img-fluid mb-4">
+      <div class="card borderless">
+         <div class="row align-items-center ">
+            <div class="col-md-12">
+               <div class="card-body">
+                  <h3>E-Commerce</h3>
+                  <h4 class="mb-3 f-w-400">Giriş Paneli&nbsp;<i class="fa fa-sign-in"></i></h4>
+                  <hr>
+                  <div class="form-group mb-3">
+                     <input type="text" class="form-control form-control-sm" value="emrah40" id="txt1" placeholder="Kullanıcı Adı">
+                  </div>
+                  <div class="form-group mb-4">
+                     <input type="password" class="form-control form-control-sm" value="Ea123.*" id="txt2" placeholder="Şifre">
+                  </div>
+                  <div class="custom-control custom-checkbox text-left mb-4 mt-2">
+                     <input type="checkbox" class="custom-control-input " id="customCheck1">
+                     <label class="custom-control-label" for="customCheck1">Beni hatırla</label>
+                  </div>
+                  <button type="submit" class="btn-block btn btn-primary btn-sm" id="btn">Giriş yap&nbsp;<i class="fa fa-sign-in"></i></button>
+                  <hr>
+                  <p class="mb-2 text-muted">Şifremi unuttum <a href="auth-reset-password.html" class="f-w-400">Sıfırla</a></p>
+                  <p class="mb-0 text-muted">Herhangi bir hesabım yok <a href="/Login/Signup/" class="f-w-400">Kayıt Oluştur</a></p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+   $("#btn").click(function () {
+      let p = {
+         username: $("#txt1").val(),
+         password: $("#txt2").val()
+      };
+      $.ajax({
+         type: "POST",
+         url: "/Login/Index/",
+         data: p,
+         success: function (funk) {
+            if (funk != true) {
+               swal("Kullanıcı Adı | Şifre Hatası", "", "warning");
+            }
+            else {
+               window.location.href = "@Url.Action("Index", "Product")";
+            }
+         }
+      });
+   });
+
+</script>

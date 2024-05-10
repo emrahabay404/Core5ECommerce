@@ -1,0 +1,120 @@
+﻿
+
+
+@{
+    ViewData["Title"] = "InfoHelp";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="container" style="background-color:ghostwhite">
+    <div class="row">
+        <div class="col-lg-4">
+            <h4>Bazı Bilgilendirmeler&nbsp;<i class="fa fa-info-circle"></i></h4>
+            <br />
+            <button style="font-size:large" id="infobtn1" class="badge badge-info d-lg-flex">İptal Süreci</button>
+            <br />
+            <button style="font-size:large" id="infobtn2" class="badge badge-success d-lg-flex">Satıcı Olmak İstiyorum</button>
+            <br />
+            <button style="font-size:large" id="infobtn3" class="badge badge-primary d-lg-flex">Sipariş hakkında</button>
+            <br />
+            <button style="font-size:large" id="infobtn4" class="badge badge-secondary d-lg-flex">Güvenlik % Gizlilik</button>
+            <br />
+            <button style="font-size:large" data-target="#modalsupport" data-toggle="modal" class="badge badge-warning d-lg-flex">Destek Talebi Gönder</button>
+        </div>
+
+        <div class="col-lg-7" style="font-family:'Yu Gothic UI'">
+            <br />
+            <i class="fa fa-pencil"></i><hr />
+            <div id="rightinfo">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<form method="post" action="">
+    <div class="modal fade" id="modalsupport" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5> Yardım | Destek | Talep Formu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group row">
+                        <label class="col-sm-5 col-form-label">Adınız & Soyadınız:</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="FullName" class="form-control form-control-sm " value="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-5 col-form-label">E-Posta | Telefon:</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="FullName" class="form-control form-control-sm " value="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-5 col-form-label">Konu:</label>
+                        <div class="col-sm-7">
+                            <input type="text" name="FullName" class="form-control form-control-sm " value="">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-5 col-form-label">Mesaj İçeriği</label>
+                        <div class="col-sm-7">
+                            <textarea type="text" name="FullName" class="form-control form-control-sm " value=""></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-sm-5 col-form-label"></label>
+                        <div class="col-sm-7">
+                            <button class="btn btn-sm btn-success" id="9954">Gönder&nbsp;<i class="fa fa-send"></i></button>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
+
+<script type="text/javascript">
+
+    $("#infobtn1").click(function () {
+        $("#rightinfo").html("İptal ettiğiniz siparişler bankaya bildirildikten sonra bankanıza bağlı olarak 3-5 gün içerisinde iade işlemi gerçekleşir.");
+    });
+
+    $("#infobtn2").click(function () {
+        $("#rightinfo").html("Sisteme giriş yaptıktan sonra Hesabım > Satıcı Olmak sekmelerini izledikten sonra gerekli yerleri doldurmanız gerekmektedir. Talebiniz bize ulaştıktan sonra yetkililerimiz talebinizi olumlu yada olumsuz yanıtladığı takdirde size bir e-posta gönderilecektir. Olumlu olması durumunda ürünlerinizi ekleyip satışa açık hale getirebilirsiniz");
+    });
+
+    $("#infobtn4").click(function () {
+        $("#rightinfo").html("Ödeme yaparken kredi kartı bilgilerinizden tutunda, giriş yaptığınız şifreye kadar tüm bilgilerniz güvenle saklanmaktadır. 3.taraf kişi veya kurumlar erişemez.");
+    });
+
+    $("#infobtn3").click(function () {
+        $("#rightinfo").html("Üye girişi yaptıkdan sonra 'Siparişlerim' sayfasına giderek siparişlerin durumunu öğrenebilirsiniz. Eğer satıcı iseniz bu alışveriş yapamayacağınız anlamına gelmemektedir :) ");
+    });
+
+
+
+</script>
+
+
