@@ -155,7 +155,6 @@ namespace Web_UI.Controllers
                   ModelState.AddModelError("", item.Description);
                }
             }
-
          }
          else
          {
@@ -204,7 +203,6 @@ namespace Web_UI.Controllers
             ViewBag.sellerstatus = "formshow";
          }
 
-
          double getwallet = C.Wallets.Where(x => x.Id == userid).Select(x => x.Balance).FirstOrDefault();
          int getwalletno = C.Wallets.Where(x => x.Id == userid).Select(x => x.WalletID).FirstOrDefault();
          ViewBag.walletno = getwalletno;
@@ -221,7 +219,7 @@ namespace Web_UI.Controllers
          try
          {
             SmtpClient client = new("smtp.live.com", 587); //Burası aynı kalacak
-            client.Credentials = new NetworkCredential("senramwil@hotmail.com", "cariseyhan37");
+            client.Credentials = new NetworkCredential("deneme@hotmail.com", "şifre");
             client.EnableSsl = true;
             MailMessage msj = new(); //Yeni bir MailMesajı oluşturuyoruz
             msj.From = new MailAddress("senramwil@hotmail.com", "Emrah" + " " + "ABAY"); //iletişim kısmında girilecek mail buaraya gelecektir

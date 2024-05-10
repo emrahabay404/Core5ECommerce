@@ -33,7 +33,7 @@ else
                 {
                     <tr>
                         <th><img src="@item.Product.PhotoUrl" height="45" width="45" /></th>
-                        <th>@item.PhotoLink.Substring(0,15) </th>
+                        <th>@item.PhotoLink </th> 
                         <th>@item.PhotoName  </th>
                         <td><a href="/Product/Detay/@item.Product.ProductId">@item.Product.Name</a></td>
                         @if (item.Status == false)

@@ -14,7 +14,6 @@ namespace DataAccess.Concrete
          //"Server=MYPC\\SQLEXPRESS;Database=Shift_Db33;Trusted_Connection=true;TrustServerCertificate=True;";
       }
 
-
       protected override void OnModelCreating(ModelBuilder modelBuilder)
       {
          modelBuilder.HasAnnotation("Relational:Collation", "Turkish_CI_AS");
@@ -41,7 +40,6 @@ namespace DataAccess.Concrete
          base.OnModelCreating(modelBuilder);
          modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
       }
-
 
       public DbSet<Product> Products { get; set; }
       public DbSet<Comment> Comments { get; set; }
