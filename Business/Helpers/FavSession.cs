@@ -1,13 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Core5ECommerce.Helpers
+﻿namespace Core5ECommerce.Helpers
 {
-    public static class FavSession
+   public static class FavSession
     {
 
         //public static void SetObjectAsJson(this ISession session, string key, object value)
