@@ -1,0 +1,34 @@
+﻿@using Entities.Concrete;
+@model AppUser
+
+@{
+   Layout = null;
+}
+
+<center>
+   <h3><i class="fa fa-file-text"></i> Talebe İlişkin Bilgiler </h3>
+</center>
+<hr />
+<table class="table table-bordered">
+   <tr>
+      <td>  <b>Firma Adı</b></td>
+      <td>@Model.NameSurname</td>
+   </tr>
+   <tr>
+      <td><b>E-Posta Adresi</b></td>
+      <td>@Model.Email</td>
+   </tr>
+   <tr>
+      <td><b>Firma Adres</b></td>
+      <td>@Model.StoreAddress</td>
+   </tr>
+   <tr>
+      <td><b>Vergi Numarası</b></td>
+      <td>@Model.StoreTaxNo</td>
+   </tr>
+   <tr>
+      <td><b>Vergi Dairesi</b></td>
+      <td>@Model.StoreTaxOffice</td>
+   </tr>
+
+</table>

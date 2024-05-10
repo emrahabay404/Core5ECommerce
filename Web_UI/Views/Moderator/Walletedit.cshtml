@@ -1,0 +1,27 @@
+﻿@using Entities.Concrete;
+@model Wallet
+
+@{
+    ViewData["Title"] = "Walletedit";
+    Layout = "~/Views/Shared/_Moderator.cshtml";
+}
+
+<img src="@TempData["userimg"] " height="140" width="140" />
+<br />
+<br />
+<h5>  Kullanıcı :  </h5> <strong>  @TempData["userfullname"] </strong>
+<br />
+<br />
+
+<form method="post" action="/Moderator/Walletedit/">
+    <input hidden value="@Model.WalletID" class="form-control" name="WalletID" />
+
+    <div class="form-inline"><label class="col-form-label">Cüzdan No : </label> <input value="@Model.WalletID" readonly class="form-control" name="WalletID" />   </div>
+    <div class="form-inline"><label class="col-form-label">Bakiye : </label>  <input value="@Model.Balance" class="form-control" name="Balance" />   </div>
+    <div class="form-inline"><label class="col-form-label">Cüzdan Durum : </label>  <input value="@Model.Status.ToString()" class="form-control" name="Status" />   </div>
+    <div class="form-inline"><label class="col-form-label">Kullanıcı : </label>  <input value="@Model.Id" class="form-control" name="Id" />   </div>
+ 
+
+    <button class="btn btn-success" type="submit">Güncelle</button>
+</form>
+

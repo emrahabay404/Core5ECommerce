@@ -1,0 +1,162 @@
+﻿@using Entities.Concrete;
+@model IEnumerable<Wallet>
+
+@{
+    ViewData["Title"] = "Wallet";
+    Layout = "~/Views/Shared/_Moderator.cshtml";
+}
+
+<h4>Cüzdan İşlemleri  </h4>
+<br />
+<button class="btn btn-sm btn-primary" type="button" data-target="#addmodal" data-toggle="modal" id="btnbrandadd">Yeni Cüzdan Tanımla</button>
+<br />
+<br />
+<br />
+
+
+@if (Model == null || Model.Count() <= 0)
+{
+    <h6>Herhangi bir veri bulunamadı.</h6>
+}
+else
+{
+    <div class="col-md-12">
+        <table class="table table-hover">
+            <tr>
+                <th>Kullanıcı Görsel</th>
+                <th>Cüzdan Numarası</th>
+                <th>Bakiye ₺</th>
+                <th>Kullanıcı Adı</th>
+                <th>Kullanıcı No</th>
+                <th>Durum</th>
+                <th>İşlemler</th>
+            </tr>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th><img src="@item.AppUser.ImageUrl" height="45" width="45" /></th>
+                        <th>@item.WalletID</th>
+                        <td>@item.Balance ₺</td>
+                        <td>@item.AppUser.UserName</td>
+                        <td><strong>@item.AppUser.Id</strong>  </td>
+                        @if (item.Status == false)
+                        {
+                            <td style="color:red">Kapalı&nbsp;<i class="fa fa-lock"></i></td>
+                        }
+                        else
+                        {
+                            <td style="color:darkgreen">Aktif&nbsp;<i class="fa fa-check"></i></td>
+                        }
+                        <td>
+                            <a href="/Moderator/WalletDelete/@item.WalletID" class="btn btn-sm btn-success">Durum Değiştir</a>
+                            <a href="/Moderator/Walletedit/@item.WalletID" class="btn btn-sm btn-primary">Düzenle</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+
+
+ 
+
+<form action="/Moderator/Walletadd/" method="post" data-ajax-failure="hata" data-ajax-success="basari">
+    <div id="addmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLiveLabel">Yeni Cüzdan Tanımla</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body ">
+
+                    <div class="form-inline">
+                        <label>Bakiye</label>&nbsp;&nbsp;
+                        <input type="text" name="Balance" placeholder="Bakiye girin" style="width:100%" class=" form-control" />
+                    </div><br />
+                    <div class="form-inline">
+                        <label>Kullanıcı</label>&nbsp;&nbsp;
+                        <input type="text" id="userfilter" name="Id" placeholder="Kullanıcı Ara" style="width:100%" class=" form-control" />
+                        <button id="btnuserchange" type="button" class="btn btn-primary btn-sm">Değiştir<i class="fa fa-refresh"></i></button>
+                    </div>
+                    <br />
+                    <div id="filterlist">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn  btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="btnsave" disabled class="btn  btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+  
+    <script type="text/javascript">
+
+        $("#userfilter").on("keyup", function () {
+            if (document.getElementById('userfilter').value != "") {
+                //var adet = 0;
+                document.getElementById("btnsave").disabled = true;
+                $("#filterlist").html("");
+                var user = $(this).val();
+                $.getJSON({
+                    contentType: "application/json",
+                    dataType: "json",
+                                     type: "get",
+                    url: "/Moderator/Usersearch?username=" + user,
+                    success: function (funk) {
+                        let w = jQuery.parseJSON(funk);
+                        let tablehtml;
+                        $.each(w, (index, value) => {
+                            tablehtml += `
+                                         
+                                           <button class="btn btn-info btn-sm" data-id="${value.Id}" data-name="${value.UserName}" type="button" id="userhref">${value.UserName}</button>
+                                                     `
+                            //adet++;
+                        });
+                        $("#filterlist").html(tablehtml);
+                        //$("#urunadet").html("Gösterilen Ürün Sayısı: " + adet);
+                    }
+                });
+            }
+            else {
+                $("#filterlist").html("");
+                //Listele();
+            }
+        });
+
+
+
+        $(document).on("click", "#btnuserchange", function () {
+            $("#filterlist").html("");
+            document.getElementById("userfilter").readOnly = false;
+            document.getElementById("userfilter").value = "";
+
+        });
+
+
+
+        $(document).on("click", "#userhref", function () {
+            $("#filterlist").html("");
+            var id = $(this).data("id");
+            var name = $(this).data("name");
+            //document.getElementById("userset").value = "Kullanıcı No:" + id + " " + "Kullanıcı Adı : " + name + "(Atandı)";
+            document.getElementById("userfilter").readOnly = true;
+            document.getElementById("userfilter").value = id;
+            document.getElementById("userfilter").style.color = "green";
+            swal("Kullanıcı Atama İşlemi Başarı", "");
+            document.getElementById("btnsave").disabled = false;
+
+        });
+
+
+
+    </script>
+

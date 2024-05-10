@@ -1,0 +1,49 @@
+﻿@using Entities.Concrete;
+@model IEnumerable<SupportRequest>
+
+@{
+   ViewData["Title"] = "SupportRequests";
+   Layout = "~/Views/Shared/_Moderator.cshtml";
+}
+
+<div class="col-md-12">
+   <h4>Destek Talep İşlemleri  </h4>
+   <br />
+   <table class="table table-hover">
+      <tr>
+         <th>Talep No</th>
+         <th>Kullanıcı</th>
+         <th>Kullanıcı Görsel</th>
+         <th>Konu</th>
+         <th>Mesaj</th>
+         <th>Durum</th>
+         <th>İşlemler</th>
+      </tr>
+      <tbody>
+         @foreach (var item in Model)
+         {
+            <tr>
+               <th>@item.SupportID</th>
+               <td>@item.AppUser.UserName</td>
+               <td><img src="@item.AppUser.ImageUrl" width="35" height="35" /></td>
+               <td>@item.Object</td>
+               <td>@item.Description</td>
+               @if (item.Status == false)
+               {
+                  <td style="color:red">Bekliyor&nbsp;<i class="fa fa-clock"></i></td>
+               }
+               else
+               {
+                  <td style="color:darkgreen">Talep Kapandı&nbsp;<i class="fa fa-check"></i></td>
+               }
+               <td>
+                  <a href="/Moderator/SupportClose/@item.SupportID" class="btn btn-sm btn-primary">Durum Değiştir</a>
+                  <a href="/Moderator/SupportRemove/@item.SupportID" class="btn btn-sm btn-danger">Talebi Sil</a>
+                  <a href="/Moderator/SupportDetail/@item.SupportID" class="btn btn-sm btn-info">Detay</a>
+               </td>
+            </tr>
+         }
+      </tbody>
+   </table>
+</div>
+

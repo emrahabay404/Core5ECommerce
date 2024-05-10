@@ -1,0 +1,75 @@
+﻿@using Entities.Concrete;
+@model IEnumerable<Order>
+
+@{
+   ViewData["Title"] = "Orderlist";
+   Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/orderlist.css" rel="stylesheet" />
+
+@if (Model.Count() == 0)
+{
+   <small>Hiç sipariş yok. Birşeyler satın al :)</small>
+}
+else
+{
+   <div class="services pb-5">
+      <div class="container">
+         <h4><i class="fa fa-bookmark"></i>&nbsp;Siparişlerim </h4>
+         <hr />
+         <div class="row">
+            @foreach (var item in Model)
+            {
+               <div class="col-md-4 p-2">
+                  <div style="height:160px" class="investor-box">
+                     <h6><i class="fa fa-bookmark"></i> Sipariş No: @item.OrderID</h6> <hr />
+                     <p><b> Tutar : </b> @Math.Round(item.Total, 2) ₺ <br /> <b> Sipariş Tarihi :</b>  @item.OrderDate.ToLongDateString() </p>
+                     <div class="flip-view">
+                        <button class="btn btn-outline-light" data-target="#modal1" data-toggle="modal" data-id="@item.OrderID" id="btnorder">Detay&nbsp;<i class="fa fa-list"></i></button>
+                        &nbsp;&nbsp;&nbsp;
+                        <a href="#" id="pdforder" data-id="@item.OrderID">Fatura&nbsp;<i class="fa fa-file-text"></i></a>
+                     </div>
+                  </div>
+               </div>
+            }
+         </div>
+      </div>
+   </div>
+}
+
+
+<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+         </button>
+         <div class="modal-body">
+            <div id="orderdetail">
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+<script type="text/javascript">
+
+
+   $(document).on("click", "#pdforder", function () {
+      var datid = $(this).data("id");
+      //window.open('/Order/Orderpdfview/' + datid, 'popUpWindow', 'fullscreen=yes,height=950,width=950,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
+      //window.open('/Order/Orderpdfview/' + datid, 'newWin', 'fullscreen=yes');
+      window.open("/Order/Orderpdfview/" + datid, "popUpWindow", "toolbar=no,scrollbars=no,resizable=no,top=500,left=500,width=4000,height=4000");
+   });
+
+
+   /* ÇALIŞIYOR ESKİ ORJİNAL*/
+   $(document).on("click", "#btnorder", function () {
+      var datid = $(this).data("id");
+      $('#orderdetail').load('@Url.Action("OrderDetail", "Order")?id=' + datid);
+   });
+
+</script>
+

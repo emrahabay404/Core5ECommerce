@@ -1,0 +1,75 @@
+﻿@using Entities.Concrete;
+@model IEnumerable<Cargo>
+
+@{
+   ViewData["Title"] = "Cargo";
+   Layout = "~/Views/Shared/_Moderator.cshtml";
+}
+
+
+<div class="col-md-12">
+   <h4>Kargo Firma İşlemleri  </h4>
+   <br />
+   <button class="btn btn-sm btn-primary" type="button" data-target="#addmodal" data-toggle="modal">Kargo Firması Tanımla</button>
+   <table class="table table-hover">
+      <tr>
+         <th>Görsel</th>
+         <th>Firma Adı</th>
+         <th>Durum</th>
+         <th>İşlemler</th>
+      </tr>
+      <tbody>
+         @foreach (var item in Model)
+         {
+
+            <tr>
+               <th><img src="@item.CargoLogo" width="175" height="75" /></th>
+               <td>@item.CargoName</td>
+               @if (item.Status == false)
+               {
+                  <td style="color:red">Kapalı&nbsp;<i class="fa fa-lock"></i></td>
+               }
+               else
+               {
+                  <td style="color:darkgreen">Aktif&nbsp;<i class="fa fa-check"></i></td>
+               }
+               <td>
+                  <a href="/Moderator/CargoDelete/@item.CargoID" class="btn btn-sm btn-success">Durum Değiştir</a>
+                  <a href="/Moderator/Cargoedit/@item.CargoID" class="btn btn-sm btn-primary">Düzenle</a>
+               </td>
+            </tr>
+         }
+      </tbody>
+   </table>
+</div>
+
+
+
+<form action="/Moderator/Cargoadd/" method="post" data-ajax-failure="hata" enctype="multipart/form-data" data-ajax-success="basari">
+   <div id="addmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLiveLabel">Kargo Firma Tanımla</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+               <div class="form-inline">
+                  <label>Firma Adı</label>&nbsp;&nbsp;
+                  <input type="text" name="CargoName" placeholder="Firma adı girin" style="width:100%" class=" form-control" />
+               </div>
+               <div class="form-inline">
+                  <label>Firma Logo</label>&nbsp;&nbsp;
+                  <input type="file" name="CargoLogo" style="width:100%" class=" form-control" />
+               </div>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn  btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn  btn-primary">Save changes</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</form>
+
+ 

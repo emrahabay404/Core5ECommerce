@@ -1,0 +1,78 @@
+﻿@using Entities.Concrete;
+@model IEnumerable<Brand>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Moderator.cshtml";
+}
+
+
+<div class="col-md-12">
+    <h4>Marka İşlemleri  </h4>
+    <br />
+    <button class="btn btn-sm btn-primary" type="button" data-target="#addmodal" data-toggle="modal">Yeni Marka Tanımla</button>
+    <table class="table table-hover">
+        <tr>
+            <th>No</th>
+            <th>Logo</th>
+            <th>Marka</th>
+            <th>Durum</th>
+            <th>İşlemler</th>
+        </tr>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th>@item.BrandID</th>
+                    <th> <img width="50" height="50"  src="@item.Brandlogo">    </th>
+                    <td>@item.BrandName</td>
+                    @if (item.Status == false)
+                    {
+                        <td style="color:red">Kapalı&nbsp;<i class="fa fa-lock"></i></td>
+                    }
+                    else
+                    {
+                        <td style="color:darkgreen">Aktif&nbsp;<i class="fa fa-check"></i></td>
+                    }
+                    <td>
+                        <a href="/Moderator/BrandDelete/@item.BrandID" class="btn btn-sm btn-success">Durum Değiştir</a>
+                        <a href="/Moderator/Brandedit/@item.BrandID" class="btn btn-sm btn-primary">Düzenle</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<form action="/Moderator/Brandadd/" method="post" data-ajax-failure="hata" data-ajax-success="basari">
+    <div id="addmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLiveLabel">Marka Tanımla</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body ">
+                    <div class="form-inline">
+                        <label>Marka Adı</label>&nbsp;&nbsp;
+                        <input type="text" name="BrandName" placeholder="Marka adı girin" style="width:100%" class=" form-control" />
+                    </div>
+                    <div class="form-inline">
+                        <label>Marka Logo</label>&nbsp;&nbsp;
+                        <input type="text" name="Brandlogo" placeholder="Marka logo url girin" style="width:100%" class=" form-control" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn  btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn  btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+ 

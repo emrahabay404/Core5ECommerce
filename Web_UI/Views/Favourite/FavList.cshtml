@@ -1,0 +1,50 @@
+﻿@using Entities.Concrete;
+@model IEnumerable<Favourite>
+
+@{
+   ViewData["Title"] = "FavList";
+   Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h5>
+   Favorilerim <img style="margin-bottom:0px;margin-right:0px" src="https://icones.pro/wp-content/uploads/2021/02/icone-de-coeur-orange-1.png" width="30" height="30" />
+</h5>
+<hr />
+@if (Model.Count() == 0 || Model == null)
+{
+   <small>Herhangi bir ürün yok...</small>
+}
+else
+{
+   <small>@Model.Count() ürün favorilerinizde</small>
+   <br />
+   <div class="row mb-5" id="productlist">
+
+      @foreach (var item in Model)
+      {
+         @if (item.Product.Status == true)
+         {
+            <div class="card col-sm-3 m-1 p-2">
+               <a style="width:25%;background-color: white; color: orangered" href="/Favourite/FavDel/@item.FavID" data-id="@item.FavID" id="btndelfav" class="btn btn-lg border-0"><i class="fa fa-heart"></i></a>
+               <a class="btn btn-sm" href="/Product/Detay/@item.ProductId"
+                  style="text-align:center;color:black;background-color:ghostwhite">
+                  <br />
+                  @if (item.Product.Discount > 0 || item.Product.BasketDiscount > 0)
+                  {
+                     <h6 style="color:red">
+                        <img width="25" height="25" src="https://w7.pngwing.com/pngs/423/371/png-transparent-discounts-and-allowances-computer-icons-coupon-sale-miscellaneous-text-logo.png" />
+                        @item.Product.Discount İndirimli Ürün&nbsp;
+                     </h6>
+                  }
+                  <img src="@item.Product.PhotoUrl" width="100" height="100" /><br /><br />
+                  <strong style="font:x-small">@item.Product.Name</strong> <br />
+                  <h6>@item.Product.Price ₺</h6>
+               </a>
+            </div>
+         }
+      }
+
+   </div>
+
+}
+

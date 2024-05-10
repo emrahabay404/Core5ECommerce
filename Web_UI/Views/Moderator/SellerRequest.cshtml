@@ -1,0 +1,137 @@
+﻿@using Entities.Concrete;
+@model IEnumerable<RequestSeller>
+
+
+@{
+    ViewData["Title"] = "SellerRequest";
+    Layout = "~/Views/Shared/_Moderator.cshtml";
+}
+
+@if (Model.Count() == 0)
+{
+    <p>Talep bulunamadı</p>
+}
+else
+{
+
+
+<div class="col-md-12">
+    <h4>Satıcı Talep İşlemleri  </h4>
+    <br />
+    <table id="tablem" class="table table-hover">
+        <tr>
+            <th>Talep No</th>
+            <th>Talep Tarihi</th>
+            <th>Talep Gönderen Kullanıcı</th>
+            <th>İşlemler</th>
+        </tr>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th>@item.RequestID</th>
+                    <td>@item.RequestDate</td>
+                  <td> <img width="35" height="35"  src="@item.AppUser.ImageUrl"/> @item.AppUser.NameSurname</td>
+                    <td>
+                        <button id="acceptsellerbtn" data-id="@item.Id"  class="btn btn-sm btn-success">Onayla&nbsp;<i class="fa fa-check"></i></button>
+                        <button id="denysellerbtn" data-id="@item.Id" class="btn btn-sm btn-danger">Reddet&nbsp;<i class="fa fa-user-times"></i></button>
+                        <button id="requdetailbtn" data-target="#modal1" data-toggle="modal" data-id="@item.Id"   class="btn btn-sm btn-primary">Talep Detay&nbsp;<i class="fa fa-tv"></i></button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+}
+
+
+
+
+<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-body">
+                <div id="orderdetail">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+
+
+    $(document).on("click", "#acceptsellerbtn", function () {
+        var datid = $(this).data("id");
+        swal({
+            title: "Emin misin?",
+            text: "Kullanıcının göndermiş olduğu satıcı talebini onaylamak üzeresiniz.Bilgilerde herhangi bir eksiklik olmadığını kabul ediyorum ve onaylıyorum.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "get",
+                        async: true,
+                        url: "/Moderator/RequestReply?id=" + datid+"&d="+1,
+                        success: function (funk) {
+                            $("#tablem").load(window.location.href + " #tablem");
+                            swal("Kullanıcın Talebi Onaylanmıştır.", "");
+                        },
+                        error: function (funnk) {
+                            swal("İşlem sırasında hata oluştu.");
+                        }
+                    });
+                }
+            });
+    });
+
+
+
+    $(document).on("click", "#denysellerbtn", function () {
+        var datid = $(this).data("id");
+        swal({
+            title: "Kullanıcı Talebi İptal Edilsin Mi?",
+            text: "Gönderilen satıcı olma talebi reddedilecektir. Bilgilerde eksiklik veya yanlışlık tespit edilmiştir.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "get",
+                        async: true,
+                        url: "/Moderator/RequestReply?id=" + datid + "&d=" + 0,
+                        success: function (funk) {
+                            $("#tablem").load(window.location.href + " #tablem");
+                            swal("Talep İptal Edildi", "");
+                        },
+                        error: function (funnk) {
+                            swal("İşlem sırasında hata oluştu.");
+                        }
+                    });
+                }
+            });
+    });
+
+
+
+    $(document).on("click", "#requdetailbtn", function () {
+              var datid = $(this).data("id");
+        $('#orderdetail').load('@Url.Action("GetRequestUser", "Moderator")?id=' + datid);
+            });
+
+
+
+
+</script>

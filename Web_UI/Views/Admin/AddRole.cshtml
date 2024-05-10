@@ -1,0 +1,21 @@
+﻿@using Entities.Concrete;
+@model AppRole
+
+@{
+    ViewData["Title"] = "AddRole";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<h1>Yeni Rol Kaydı</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label>Rol İsmi</label>
+        <input name="Name" class="form-control" />
+        <br />
+        @*<div asp-validation-summary="ModeOnly">
+
+            </div>*@
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+    </div>
+</form>

@@ -1,0 +1,15 @@
+﻿@using Entities.Concrete;
+@model Category
+
+@{
+    ViewData["Title"] = "Catedit";
+    Layout = "~/Views/Shared/_Moderator.cshtml";
+}
+
+<form method="post" action="/Moderator/Catedit/">
+    <input hidden value="@Model.CategoryID" class="form-control" name="CategoryID" />
+    <input value="@Model.CategoryName" class="form-control" name="CategoryName" />
+    <input value="@Model.Status.ToString()" class="form-control" name="Status" />
+    <button class="btn btn-success" type="submit">Güncelle</button>
+</form>
+

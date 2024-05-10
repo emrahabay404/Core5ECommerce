@@ -1,0 +1,18 @@
+﻿@using Entities.Concrete;
+@model Cargo
+
+@{
+    ViewData["Title"] = "Cargoedit";
+    Layout = "~/Views/Shared/_Moderator.cshtml";
+}
+
+<img src="@Model.CargoLogo" />
+<br />
+<br />
+
+<form method="post" action="/Moderator/Cargoedit/">
+    <input hidden value="@Model.CargoID" class="form-control" name="CargoID" />
+    <input value="@Model.CargoName" class="form-control" name="CargoName" />
+    <input value="@Model.Status.ToString()" class="form-control" name="Status" />
+    <button class="btn btn-success" type="submit">Güncelle</button>
+</form>

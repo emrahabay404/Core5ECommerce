@@ -1,9 +1,225 @@
-﻿
+﻿@using Entities.Concrete;
+
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+   ViewData["Title"] = "Index";
+   Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
- 
 
+
+
+<div style="margin-left:0px" class="container col-md-12">
+   <div id="divim">
+      @if (ViewBag.cart == null || (int)TempData["CartCount"] == 0)
+      {
+         <div class="alert alert-warning" role="alert">
+            Sepet boş. Bir ürün ekle... <br /><br />
+            <a href="/Product/Index/" style="font:large">Ürünlere gözat&nbsp;<i class="fa fa-list"></i> </a>
+         </div>
+      }
+      else
+      {
+
+         <table class="table text-left table-hover">
+            <tr style="color:black;background-color:ghostwhite">
+               <th>Sepetim <i class="fa fa-shopping-cart"></i></th>
+               <th>Ürün</th>
+               <th>Fiyat</th>
+               <th>Adet</th>
+               <th>Ara toplam</th>
+               <th></th>
+            </tr>
+            @foreach (var item in ViewBag.cart)
+            {
+               <tr>
+                  <td width="22%" align="left"><img src="@item.Product.PhotoUrl" height="60" width="60" /> </td>
+                  <td> <a href="/Product/Detay/@item.Product.ProductId"> @item.Product.Name</a>  <br /> Satıcı: @item.Product.Id </td>
+
+                  @if (item.Product.Discount > 0 || item.Product.BasketDiscount > 0)
+                  {
+                     <td><del>@item.Product.Price</del> <br /> <b>  @(item.Product.Price - ((item.Product.Price * (item.Product.Discount + item.Product.BasketDiscount)) / 100)) ₺ </b>  </td>
+                  }
+                  else
+                  {
+                     <td>@item.Product.Price ₺</td>
+                  }
+
+                  <td> <button id="quantityremove" data-id="@item.Product.ProductId" style="background-color: orangered; color: white" class="border-0 btn btn-info btn-sm">-</button>&nbsp;@item.Adet &nbsp;<button data-id="@item.Product.ProductId" id="quantityplus" style="background-color:orangered;color:white" class="btn border-0 btn-sm btn-info">+</button>  </td>
+                  <td>@((item.Product.Price - (item.Product.Price * (item.Product.Discount + item.Product.BasketDiscount)) / 100) * item.Adet) ₺</td>
+                  <td>
+                     <a href="#" style="background-color: orangered;color: white" data-id="@item.Product.ProductId" id="cartdeleteproduct" class="btn btn-outline-light border-0">
+                        <i class="fa fa-trash fa-sm"></i>
+                     </a>
+                  </td>
+               </tr>
+            }
+            <tr>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td align="left"> <strong>Genel Toplam : </strong> @ViewBag.total ₺ </td>
+            </tr>
+            <tr>
+               <td align="left">
+                  <button id="btnorderpay" class="btn btn-success" type="submit">Siparişi Tamamla&nbsp;<i class="fa fa-credit-card"></i> </button>
+               </td>
+            </tr>
+         </table>
+
+         @if (Globals.LoginStatus == 0)
+         {
+            <button class="btn btn-primary btn-block col-md-4" data-target="#noaccomdl" data-toggle="modal" id="noacco">Üye Olmadan Devam Et&nbsp;<i class="fa fa-envelope"></i></button>
+         }
+         <br />
+         <br />
+         <div id="infodiv" style="display:none">
+            <small>Bilgilendirme e-postası</small>
+            <i class="fa fa-envelope"></i><h4 id="ordermailinfo"></h4>
+         </div>
+
+         @if (Globals.LoginStatus == 1)
+         {
+            <div class="row col-md-12">
+               <div class="col-md-6" style="background-color:ghostwhite">
+                  <h6>Kayıtlı Adresleriniz </h6>
+                  @Html.DropDownList("AddressID", (List<SelectListItem>)ViewBag.getaddress, "Teslimat Adresini Seç", new { @id = "orderaddress", @class = "form-control form-control-sm" })
+               </div>
+               <div class="col-md-6" style="background-color:ghostwhite">
+                  <h6>Cüzdan Bakiye : <b> @ViewBag.getwallet ₺</b> </h6>
+                  <input type="checkbox" id="scales" name="scales">
+                  <input id="durum" class="form-control" />
+                  <label for="scales">  Cüzdan İle Öde </label>
+               </div>
+            </div>
+         }
+      }
+   </div>
+</div>
+
+
+
+
+
+
+<script type="text/javascript">
+
+
+
+   $(document).on("click", "#mailinfobtn", function () {
+      document.getElementById("ordermailinfo").innerHTML = $("#infomailtxt").val();
+      swal("Belirttiğiniz mail adresine sipariş detaylarınız gönderilecektir", "", "info");
+      $("#infodiv").show();
+      $("#noaccomdl").modal("hide");
+   });
+
+
+   $(document).on("click", "#btnorderpay", function () {
+      var adresid = $("#orderaddress").val();
+      $.ajax({
+         type: "get",
+         url: "/Cart/Pay?adresid=" + adresid,
+         success: function (funk) {
+            if (funk == "userid") {
+               swal("", "Devam etmek için lütfen giriş yapın", "warning");
+            }
+            if (funk == "balance") {
+               swal("", "Ödeme alınabilmesi için yeterli bakiyeniz bulunmamaktadır", "warning");
+            }
+            if (funk == "address") {
+               swal("", "Siparişinizin Gönderileceği Teslimat Adresi Belirtin", "warning");
+            }
+            if (funk == "processerror") {
+               swal("Ooops!Hata.Lütfen Kontrol Edin", "", "error");
+            }
+            if (funk == "succe") {
+               $("#divim").load(window.location.href + " #divim");
+               swal("Ödemeniz başarıyla alınmıştır.", "Siparişlerim sayfasına giderek detayları görebilirsiniz", "success")
+                  .then((value) => {
+                     window.location.href = "@Url.Action("Orderlist", "Order")";
+                  });
+            }
+         }
+      });
+   });
+
+
+   $(document).on("click", "#quantityremove", function () {
+      var datid = $(this).data("id");
+      $.ajax({
+         contentType: "application/json",
+         dataType: "json",
+         type: "post",
+         url: "/Cart/QuantityRemove?id=" + datid,
+         success: function (func) {
+            if (func == true) {
+               $("#divim").load(window.location.href + " #divim");
+            }
+            console.log(func);
+         }
+      });
+   });
+
+
+   $(document).on("click", "#quantityplus", function () {
+      var datid = $(this).data("id");
+      $.ajax({
+         contentType: "application/json",
+         dataType: "json",
+         type: "post",
+         url: "/Cart/Ekle?id=" + datid,
+         success: function (func) {
+            if (func == true) {
+               $("#divim").load(window.location.href + " #divim");
+            }
+            console.log(func);
+         }
+      });
+   });
+
+
+
+   $(document).on("click", "#cartdeleteproduct", function () {
+      var datid = $(this).data("id");
+      $.ajax({
+         contentType: "application/json",
+         dataType: "json",
+         type: "post",
+         url: "/Cart/Remove?id=" + datid,
+         success: function (func) {
+            if (func == true) {
+               swal("", "Ürün sepetten çıkarıldı");
+               $("#divim").load(window.location.href + " #divim");
+            }
+            console.log(func);
+         }
+      });
+   });
+
+
+</script>
+
+
+
+<div class="modal fade" id="noaccomdl" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title">Üyeliksiz Sipariş Bilgilendirme Maili </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <div class="form-group row">
+               <label class="col-sm-2 col-form-label">Eposta:</label>
+               <div class="col-sm-10">
+                  <input type="email" id="infomailtxt" class="form-control" required value="">
+                  <br />   <button type="button" id="mailinfobtn" class="btn text-uppercase btn-success">İlerle&nbsp;<i class="fa fa-arrow-circle-right"></i></button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
 
