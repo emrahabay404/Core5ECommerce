@@ -252,9 +252,9 @@ namespace Web_UI.Controllers
                   ordetay.Quantity = (int)item.Adet;
                   ordetay.ProductId = (int)item.Product.ProductId;
                   ordetay.Status = 1;
-                  ordetay.CargoID = 2;
+                  ordetay.CargoID = 1;
                   ordetay.AddressID = adresid;
-                  ordetay.OrderProcessID = 1;
+                  ordetay.OrderProcessID = 2;
                   ordetay.Deliverydate = Convert.ToDateTime(DateTime.Now.ToLongTimeString());
                   C.OrderDetails.Add(ordetay);
                   C.SaveChanges();

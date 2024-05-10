@@ -1,0 +1,79 @@
+﻿@using Entities.Concrete;
+@model IEnumerable<Photo>
+
+@{
+    Layout = null;
+}
+
+
+@*<h4>
+        Ürün : @ViewBag.Prdname
+    </h4>*@
+
+
+
+
+<form method="post" class="col-md-5" action="/Product/PhotoAdd/" enctype="multipart/form-data">
+        <input hidden value="@TempData["ProductId"]" name="productid" />
+        <p>
+            <input type="file" name="photo" class="form-control-sm form-control" />
+            <button type="submit" class="btn btn-sm btn-info">Ekle <i class="fa fa-plus"></i> </button>
+        </p>
+</form>
+
+
+
+
+@if (Model.Count() == 0)
+{
+    <p>Ürüne ait görsel bulunamadı</p>
+}
+else
+{
+    <div id="photolist">
+        <p>@ViewBag.PrdnameÜrüne İlgili Görseller  <i class="fa fa-image"></i>  </p>
+        <div class="row col-md-12">
+            @foreach (var item in Model)
+            {
+                <div class="card col-md-2">
+                    <a id="btnremove" href="#" data-id="@item.PhotoID" class="btn btn-sm btn-danger">Kaldır&nbsp;<i class="fa fa-trash"></i></a>
+                    <img src="@item.PhotoLink" width="115" height="115" />
+                </div>
+            }
+        </div>
+    </div>
+}
+
+
+
+@*href="/Product/PhotoRemove/@item.PhotoID"*@
+
+
+
+<script type="text/javascript">
+
+
+    $(document).on("click", "#btnremove", function () {
+        var datid = $(this).data("id");
+        $.ajax({
+            contentType: "application/json",
+            dataType: "json",
+            type: "get",
+            url: "/Product/PhotoRemove?id=" + datid,
+            success: function (funk) {
+                swal("", "Görsel kaldırıldı", "success");
+                $("#photolist").load(window.location.href + " #photolist");
+            },
+            error: function (funk2) {
+                swal("", "İşlem sırasında hata oluştu.Daha sonra tekrar deneyin", "error");
+            }
+
+        });
+    });
+
+
+
+</script>
+
+
+

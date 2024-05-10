@@ -13,7 +13,7 @@ namespace Web_UI.Controllers
 
    [Authorize(Roles = "admin,moderator")]
 
-    public class ModeratorController : Controller
+   public class ModeratorController : Controller
     {
         private readonly RoleManager<AppRole> _roleManager;
         private readonly UserManager<AppUser> _userManager;

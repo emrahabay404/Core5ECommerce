@@ -1,0 +1,68 @@
+﻿@using Entities.Concrete;
+@model OrderDetail
+
+
+@{
+    Layout = null;
+}
+
+
+
+
+
+<form data-ajax-url="@Url.Action("StoreOrderDetail","Product")" method="post" data-ajax="true" data-ajax-method="POST" data-ajax-loading="#spinner" data-ajax-failure="hata" data-ajax-success="basari">
+
+    @*<form method="post" action="/Product/StoreOrderDetail/">*@
+    <input hidden value="@Model.OrderDetailId" name="OrderDetailId" />
+    <center><img src="@Model.Product.PhotoUrl" width="100" height="100" /> </center>
+    Kargo Firma:<img src="@Model.Cargo.CargoLogo" width="30" height="30" /> @Html.DropDownList("CargoID", (List<SelectListItem>)TempData["cargos"], "Kargo Firması", new { @class = "form-control form-control-sm", @name = "CargoID" })
+    Kargo Takip No:<input value="@Model.OrderCargoNo" maxlength="8" name="OrderCargoNo" class="form-control-sm form-control" />
+    Teslimat Adresi:<textarea readonly class="form-control form-control-sm">@Model.Address.Details</textarea>
+    Sipariş Süreci:@Html.DropDownList("OrderProcessID", (List<SelectListItem>)TempData["process"], null, new { @class = "form-control form-control-sm", @name = "OrderProcessID" })
+    <CENTER>
+        <br />
+        <button type="submit" class="btn btn-sm btn-success">Kaydet&nbsp;<i class="fa fa-check"></i></button>
+    </CENTER>
+</form>
+
+
+
+
+
+
+<script type="text/javascript">
+
+
+    var basari = function () {
+        swal("", "İşlem Başarıyla Gerçekleşti", "success");
+    };
+
+    var hata = function () {
+        swal("", "Hata! İşlem Başarısız", "error");
+    };
+
+
+    $(document).on("change", "#btnprocess", function () {
+        var datid = $("#orderdetid").val();
+        var proced = $(this).val();
+        $.ajax({
+            contentType: "application/json",
+            dataType: "json",
+            type: "POST",
+            /*data: { orderid: datid, procid: proced },*/
+            //url: '/User/dologin?username=' + username + '&password=' + password,
+            url: "/Product/SetOrderProcess?orderid=" + datid + "&procid=" + proced,
+            success: function (funk) {
+                if (funk == true) {
+                    swal("İşlem Süreci Başarıyla Değiştirildi");
+                }
+            }
+        });
+    });
+
+
+
+</script>
+
+
+

@@ -1,0 +1,97 @@
+﻿@using Entities.Concrete;
+@model Product
+
+
+
+@{
+    Layout = null;
+}
+
+
+
+<form method="post" class="col-md-5" enctype="multipart/form-data" action="/Product/Coverimgadd">
+    <input hidden name="productid" id="prdid" value="@Model.ProductId" />
+    <input type="file" class="form-control form-control-sm" name="photo" required />
+    <button type="submit" class="btn btn-success btn-sm">Kapak Fotosu Ekle <i class="fa fa-image"></i> </button>
+</form>
+
+
+
+<a href="#" id="prdimgdel" class="btn btn-sm btn-danger">Mevcut Fotoğrafı Kaldır&nbsp;<i class="fa fa-trash"></i></a>
+
+<br />
+
+
+<form data-ajax-url="@Url.Action("ProductEdit","Product")" method="post" data-ajax="true" data-ajax-method="POST" data-ajax-loading="#spinner" data-ajax-failure="hata" data-ajax-success="basari">
+
+    @*<form method="post" action="/Product/ProductEdit/">*@
+    <div class="row col-md-12">
+        <div class="col-lg-6">
+            <input hidden value="@Model.ProductId" name="ProductId" />
+            Ürün Adı:
+            <input type="text" class="form-control form-control-sm" name="Name" value="@Model.Name" required />
+            Fiyatı:
+            <input type="number" class="form-control form-control-sm" name="Price" value="@Model.Price" required />
+            Stok Adet:
+            <input type="text" class="form-control form-control-sm" name="Stock" value="@Model.Stock" required />
+            Açıklama:
+            <input type="text" class="form-control form-control-sm" name="Description" value="@Model.Name" required />
+            İndirim:
+            <input type="number" class="form-control form-control-sm" name="Discount" value="@Model.Discount" required />
+        </div>
+        <div class="col-lg-6">
+            Sepet İndirim:
+            <input type="number" class="form-control form-control-sm" name="BasketDiscount" value="@Model.BasketDiscount" required />
+            Alt Kategori:
+            @Html.DropDownList("SubCatID", (List<SelectListItem>)ViewBag.subcat, null, new { @class = "form-control form-control-sm" })
+            Markası:
+            @Html.DropDownList("BrandID", (List<SelectListItem>)ViewBag.brand, null, new { @class = "form-control form-control-sm" })
+            <center>
+                <br />
+                <button class="btn btn-success btn-sm" id="btnupd" type="submit">Güncelle</button>
+                <button class="btn btn-secondary btn-sm" type="button">İptal</button>
+            </center>
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+<script type="text/javascript">
+
+    $(document).on("click", "#prdimgdel", function () {
+        var datid = $("#prdid").val();
+        swal({
+            title: "Kapak Fotoğrafı Silinecektir",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "get",
+                        url: "/Product/Coverimgdel?id=" + datid,
+                        success: function (funk) {
+                            if (funk == true) {
+                                $("#tablem").load(window.location.href + " #tablem");
+                                swal("", "Kapak fotoğrafı kaldırıldı.", "success");
+                            }
+                            else {
+                                swal("","Hata oluştu!İşlem başarısız.","error");
+                            }
+
+                           
+                        }
+                    });
+                }
+            });
+    });
+
+
+
+</script>

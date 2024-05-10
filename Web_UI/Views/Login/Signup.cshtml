@@ -1,0 +1,162 @@
+﻿
+@{
+    //Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <header>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="">
+        <meta name="author" content="Phoenixcoded" />
+        <link rel="icon" href="~/User/dist/assets/images/favicon.ico" type="image/x-icon">
+
+
+        @*<link rel="stylesheet" href="~/User/dist/assets/css/style.css">*@
+        <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+    </header>
+
+
+
+
+    <form data-ajax-url="@Url.Action("Signup","Login")" method="post" enctype="multipart/form-data" data-ajax="true" data-ajax-method="POST" data-ajax-loading="#spinner" data-ajax-success="OnSuccess" data-ajax-complete="complete">
+
+        @*<form method="post" action="/User/Signup/" data-ajax-enctype="multipart/form-data" data-ajax="true" data-ajax-method="post" data-ajax-loading="#spinner" data-ajax-success="OnSuccess">*@
+        <div id="cnt" class="col-md-8">
+            <div class="auth-wrapper">
+                <div class="auth-content text-center">
+                    <img src="#" alt="" class="img-fluid mb-4">
+                    <div class="card borderless">
+                        <div class="row align-items-center text-center">
+                            <div class="col-md-12">
+                                <div class="card-body">
+                                    <h3>E-Commerce Store v3.7</h3>
+                                    <h4 class="f-w-400">Hızlı Üyelik Formu&nbsp;<i class="fa fa-user-plus"></i></h4>
+                                    <hr>
+                                    <div class="form-group mb-3">
+                                        <input type="text" class="form-control form-control-sm" name="NameSurname" id="txt1" required placeholder="Ad Soyad">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input type="text" class="form-control form-control-sm" name="Username" id="txt2" required placeholder="Kullanıcı">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input type="email" class="form-control form-control-sm" name="Mail" id="txt3" required placeholder="Email Adresi">
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <input type="password" class="form-control form-control-sm" name="Password" required id="txt4" placeholder="Şifre">
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <input type="password" class="form-control form-control-sm" name="ConfirmPassword" required id="txt5" placeholder="Şifre Onay">
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <input type="file" class="form-control form-control-sm" name="ImgUrl" id="txt6">
+                                        <small>(İsteğe bağlıdır.Üyelikten sonrada eklenebilir.)</small>
+                                    </div>
+
+                                    <span id="spinner" style="display:none;"><i class="fas fa-spinner fa-spin fa-6x"></i></span>
+                                    <div class="custom-control custom-checkbox  text-left mb-4 mt-2">
+                                        <a href="#" style="color:blue" id="mtn">•Şartları okudum ve kabul ettim.</a>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-sm btn-block" id="btn">Kaydı Tamamla&nbsp;<i class="fa fa-user-plus"></i></button>
+                                    <hr>
+
+                                    <p class="mb-2">Zaten bir hesabım var <a href="/Account/Login/" class="f-w-400">Giriş Yap</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+
+
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    @*<script src="https://ajax.aspnetcdn.com/ajax/jquery.unobtrusive-ajax/3.2.5/jquery.unobtrusive-ajax.min.js"></script>*@
+
+    <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+
+    <script src="~/User/dist/assets/js/vendor-all.min.js"></script>
+    <script src="~/User/dist/assets/js/plugins/bootstrap.min.js"></script>
+    @*<script src="~/User/dist/assets/js/pcoded.min.js"></script>*@
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+
+    <script type="text/javascript">
+
+
+        var OnSuccess = function (response) {
+           swal("Üyelik İşlemi Başarılı", "Giriş Yap", "success")
+                            .then((value) => {
+                                window.location.href = "@Url.Action("Index", "Login")";
+                            });
+        };
+
+
+
+        $("#mtn").click(function () {
+            swal("Site Üyelik Şartları Hk.", "Sitemizde verdiğiniz mail adresi üzerinden bilgi ve haber e postaları spam menüsüne varmadan gönderilmeye devam edilecektir.Eğer eposta bülteninden çıkmak isterseniz mail ileti dizisini durdurabilirsiniz. Şifre ve mail adresleriniz şifrelenmiş formattadır herhangi bir kullanıcının görmeyeceği şekilde veritabanımızda saklanmaktadır.");
+
+        });
+
+
+        @*$("#btn").click(function () {
+                        var myfile = document.getElementById("txt6");
+            var formData = new FormData();
+            if (myfile.files.length > 0) {
+                for (var i = 0; i < myfile.files.length; i++) {
+                    formData.append('file-' + i, myfile.files[i]);
+                }
+            }
+                        let veri = {
+                NameSurname: $("#txt1").val(),
+                Username: $("#txt2").val(),
+                Mail: $("#txt3").val(),
+                Password: $("#txt4").val(),
+                ConfirmPassword: $("#txt5").val(),
+                ImgUrl: formData
+                        };
+            $.ajax({
+                type: "post",
+                url: "/User/Signup/",
+                enctype:"multipart/form-data",
+                data: veri,
+                success: function (funk) {
+                    if (funk != true) {
+                        swal("Eksik | Hatalı Bilgi Girişi", "", "");
+                    }
+                    else {
+                        swal("Üyelik İşlemi Başarılı", "Giriş Yap", "success")
+                            .then((value) => {
+                                window.location.href = "@Url.Action("Login", "User")";
+                            });
+                    }
+                }
+            });
+        });*@
+
+    </script>
+
+
+
+</body>
+</html>

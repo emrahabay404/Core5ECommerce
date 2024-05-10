@@ -3,6 +3,7 @@
 
 @{
    Layout = null;
+   //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
@@ -11,12 +12,10 @@
    <input hidden value="@item.OrderId" id="orderidpdf" />
 }
 
-
 @if (Model == null || Model.Count() == 0)
 {
    <p>Sipariş Detay Bulunamadı</p>
 }
-
 
 else
 {
@@ -105,6 +104,8 @@ else
 
 
 </script>
+
+
 
 
 <script src="~/html2pdf.js/html2pdf.bundle.js"></script>
