@@ -12,7 +12,6 @@ namespace Web_UI.Controllers
 {
 
    [Authorize(Roles = "admin,moderator")]
-
    public class ModeratorController : Controller
     {
         private readonly RoleManager<AppRole> _roleManager;
@@ -22,7 +21,6 @@ namespace Web_UI.Controllers
             _roleManager = roleManager;
             _userManager = userManager;
         }
-
 
         #region Tanimlamalar1
         public Context C = new();
@@ -38,15 +36,10 @@ namespace Web_UI.Controllers
         public Cargo cargo = new();
         #endregion
 
-
-
         public IActionResult Index()
         {
             return View();
         }
-
-
-
 
         public IActionResult SellerRequest()
         {
@@ -85,15 +78,11 @@ namespace Web_UI.Controllers
             return Redirect("/Moderator/SellerRequest/");
         }
 
-
         [HttpGet]
         public IActionResult GetRequestUser(int id)
         {
             return View(C.Users.Where(x => x.Id == id).FirstOrDefault());
         }
-
-
-
 
         [HttpGet]
         public IActionResult Brand()
@@ -137,8 +126,6 @@ namespace Web_UI.Controllers
             brandRepo.TUpdate(badd);
             return RedirectToAction("Brand", "Moderator");
         }
-
-
 
         [HttpGet]
         public IActionResult SubCatg()
@@ -188,10 +175,6 @@ namespace Web_UI.Controllers
             return RedirectToAction("SubCatg", "Moderator");
         }
 
-
-
-
-
         [HttpGet]
         public IActionResult Catg()
         {
@@ -231,9 +214,6 @@ namespace Web_UI.Controllers
             categoryRepo.TUpdate(badd);
             return RedirectToAction("Catg", "Moderator");
         }
-
-
-
 
         [HttpGet]
         public IActionResult Cargo()
@@ -287,18 +267,12 @@ namespace Web_UI.Controllers
             return RedirectToAction("Cargo", "Moderator");
         }
 
-
-
-
         [HttpGet]
         public JsonResult Usersearch(string username)
         {
             var getus = JsonConvert.SerializeObject(C.Users.Where(x => x.UserName.Contains(username)).Take(5).ToList());
             return Json(getus);
         }
-
-
-
 
         [HttpGet]
         public IActionResult Wallet()
@@ -353,11 +327,6 @@ namespace Web_UI.Controllers
             return RedirectToAction("Wallet", "Moderator");
         }
 
-
-
-
-
-
         [HttpGet]
         public IActionResult Photos()
         {
@@ -398,10 +367,6 @@ namespace Web_UI.Controllers
             }
         }
 
-
-
-
-
         [HttpGet]
         public IActionResult SupportRequests()
         {
@@ -434,9 +399,6 @@ namespace Web_UI.Controllers
             supportRepo.TDelete(supportRepo.TGet(id));
             return RedirectToAction("SupportRequests", "Moderator");
         }
-
-
-
 
     }
 }

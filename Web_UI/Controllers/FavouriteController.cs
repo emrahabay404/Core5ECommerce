@@ -7,71 +7,52 @@ using Microsoft.AspNetCore.Mvc;
 namespace Web_UI.Controllers
 {
 
-
    public class FavouriteController : Controller
-    {
-        private readonly UserManager<AppUser> _userManager;
+   {
+      private readonly UserManager<AppUser> _userManager;
 
-        public FavouriteController(UserManager<AppUser> userManager)
-        {
-            _userManager = userManager;
-        }
+      public FavouriteController(UserManager<AppUser> userManager)
+      {
+         _userManager = userManager;
+      }
 
-        public Context C = new();
-        public FavoriRepo favoriRepo = new();
-        public bool Durum;
+      public Context C = new();
+      public FavoriRepo favoriRepo = new();
+      public bool Durum;
 
+      [HttpGet]
+      public IActionResult FavList()
+      {
 
+         int id = (int)_userManager.GetUserAsync(User).Result.Id;
+         return View(favoriRepo.GetListWith(id));
+      }
 
-        [HttpGet]
-        public IActionResult FavList()
-        {
-           
-            int id = (int)_userManager.GetUserAsync(User).Result.Id;
-            return View(favoriRepo.GetListWith(id));
-        }
+      public IActionResult FavDel(int id)
+      {
+         favoriRepo.TDelete(favoriRepo.TGet(id));
+         return RedirectToAction("FavList", "Favourite");
+      }
 
+      public IActionResult Add(int prodid)
+      {
+         int id = (int)_userManager.GetUserAsync(User).Result.Id;
+         //var cnt = C.Favourites.Where(x => x.ProductId == prodid && x.Id == id).Count();
+         var cnt = favoriRepo.GetFavCount(prodid, id).Count();
+         if (cnt < 1)
+         {
+            Favourite fv = new();
+            fv.Id = (int)_userManager.GetUserAsync(User).Result.Id;
+            fv.ProductId = (int)prodid;
+            favoriRepo.TAdd(fv);
+            Durum = true;
+         }
+         else
+         {
+            Durum = false;
+         }
+         return Json(Durum);
+      }
 
-        //[HttpGet]
-        //public JsonResult FavListJson()
-        //{
-        //    int id = (int)_userManager.GetUserAsync(User).Result.Id;
-        //    var list2 = C.Favourites.Where(x => x.Id == id).Include(y => y.Product).ToList();
-        //    //return Json(JsonConvert.SerializeObject(favoriRepo.GetListWith(id)));
-        //    return Json(list2);
-        //}
-
-
-
-        public IActionResult FavDel(int id)
-        {
-            favoriRepo.TDelete(favoriRepo.TGet(id));
-            return RedirectToAction("FavList", "Favourite");
-        }
-
-
-
-
-        public IActionResult Add(int prodid)
-        {
-            int id = (int)_userManager.GetUserAsync(User).Result.Id;
-            //var cnt = C.Favourites.Where(x => x.ProductId == prodid && x.Id == id).Count();
-            var cnt = favoriRepo.GetFavCount(prodid,id).Count();
-            if (cnt < 1)
-            {
-                Favourite fv = new();
-                fv.Id = (int)_userManager.GetUserAsync(User).Result.Id;
-                fv.ProductId = (int)prodid;
-                favoriRepo.TAdd(fv);
-                Durum = true;
-            }
-            else
-            {
-                Durum = false;
-            }
-                        return Json(Durum);
-        }
-
-
-    }
+   }
 }

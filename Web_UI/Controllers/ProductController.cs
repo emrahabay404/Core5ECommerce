@@ -23,13 +23,11 @@ namespace Web_UI.Controllers
       private readonly RoleManager<AppRole> _roleManager;
       private readonly UserManager<AppUser> _userManager;
 
-
       public ProductController(RoleManager<AppRole> roleManager, UserManager<AppUser> userManager)
       {
          _roleManager = roleManager;
          _userManager = userManager;
       }
-
 
       [AllowAnonymous]
       public JsonResult AllProductList()
@@ -77,9 +75,6 @@ namespace Web_UI.Controllers
          return View(productRepo.TList().OrderByDescending(x => x.Name).ToList());
       }
 
-
-
-
       [HttpGet]
       [AllowAnonymous]
       public IActionResult Detay(int id)
@@ -121,8 +116,6 @@ namespace Web_UI.Controllers
          return View(p);
       }
 
-
-
       [HttpGet]
       public IActionResult Addcomment(string msg, int productid)
       {
@@ -136,8 +129,6 @@ namespace Web_UI.Controllers
          C.SaveChanges();
          return Json(true);
       }
-
-
 
       [HttpGet]
       public IActionResult Delete(int id)
@@ -156,7 +147,6 @@ namespace Web_UI.Controllers
          //productRepo.TDelete(val);
          return Redirect("/Product/List/");
       }
-
 
       [HttpPost]
       public void Addpro(UrunEkle p)
@@ -193,8 +183,6 @@ namespace Web_UI.Controllers
 
          //return RedirectToAction("List", "Product");
       }
-
-
 
       [HttpGet]
       public IActionResult ProductEdit(int id)
@@ -237,10 +225,6 @@ namespace Web_UI.Controllers
          return Redirect("/Product/List/");
       }
 
-
-
-
-
       [HttpPost]
       public IActionResult Coverimgadd(IFormFile photo, int productid)
       {
@@ -282,11 +266,6 @@ namespace Web_UI.Controllers
          }
 
       }
-
-
-
-
-
 
       [HttpGet]
       public IActionResult ProductPhotoEdit(int id)
@@ -334,10 +313,6 @@ namespace Web_UI.Controllers
          //return Redirect("/Product/List/");
       }
 
-
-
-
-
       //BURASI SATICI ÜRÜN İŞLEMLERİ!!
       [Authorize(Roles = "admin,seller")]
       [HttpGet]
@@ -377,8 +352,6 @@ namespace Web_UI.Controllers
          return View(productRepo.GetWithStore(Userid));
       }
 
-
-
       //ALLTAKİ 2 KISIM LAYOUTTA KULLANILIYOR.
       [AllowAnonymous]
       [HttpGet]
@@ -397,8 +370,6 @@ namespace Web_UI.Controllers
          return Json(JsonConvert.SerializeObject(list));
       }
 
-
-
       [HttpGet]
       [AllowAnonymous]
       public IActionResult StoreProductist(int id)
@@ -416,8 +387,6 @@ namespace Web_UI.Controllers
          TempData["Brandname"] = C.Brands.Where(x => x.BrandID == id).Select(y => y.BrandName).FirstOrDefault();
          return View(list);
       }
-
-
 
       [Authorize(Roles = "admin,seller")]
       [HttpGet]
@@ -468,7 +437,6 @@ namespace Web_UI.Controllers
          //return Redirect("/Product/StoreOrder/");
       }
 
-
       [HttpPost]
       [Authorize(Roles = "admin,seller")]
       public IActionResult SetOrderProcess(int orderid, int procid)
@@ -485,10 +453,6 @@ namespace Web_UI.Controllers
             throw;
          }
       }
-
-
-
-
 
    }
 }

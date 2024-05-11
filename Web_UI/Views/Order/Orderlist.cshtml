@@ -26,7 +26,8 @@ else
                      <h6><i class="fa fa-bookmark"></i> Sipariş No: @item.OrderID</h6> <hr />
                      <p><b> Tutar : </b> @Math.Round(item.Total, 2) ₺ <br /> <b> Sipariş Tarihi :</b>  @item.OrderDate.ToLongDateString() </p>
                      <div class="flip-view">
-                        <button class="btn btn-outline-light" data-target="#modal1" data-toggle="modal" data-id="@item.OrderID" id="btnorder">Detay&nbsp;<i class="fa fa-list"></i></button>
+                        @*<button class="btn btn-outline-light" data-target="#modal1" data-toggle="modal" data-id="@item.OrderID" id="btnorder">Detay&nbsp;<i class="fa fa-list"></i></button>*@
+                        <a href="/Order/OrderDetail/@item.OrderID" class="btn btn-outline-info">Detay&nbsp;<i class="fa fa-list"></i></a>
                         &nbsp;&nbsp;&nbsp;
                         <a href="#" id="pdforder" data-id="@item.OrderID">Fatura&nbsp;<i class="fa fa-file-text"></i></a>
                      </div>
