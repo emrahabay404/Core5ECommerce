@@ -9,39 +9,37 @@
 @using X.PagedList.Mvc.Core*@
 
 
-
 <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css" />
 
 
 @{
-   ViewData["Title"] = "List";
-   Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
-
 <h5>
-   <i class="fa fa-building">&nbsp;Mağazanız : @UserManager.GetUserAsync(User).Result.NameSurname</i>
+    <i class="fa fa-building">&nbsp;Mağazanız : @UserManager.GetUserAsync(User).Result.NameSurname</i>
 </h5>
 <small>Size ait ürünler listelenmektedir.</small>
 
 
 <center>
-   @if (Model.Count() == 0)
-   {
-      <p>Henüz bir ürün eklemediniz.</p>
-   }
-   else
-   {
-      <h5 id="urunadet"> @Model.Count() Adet Ürün Listeleniyor</h5>
-   }
+    @if (Model.Count() == 0)
+    {
+        <p>Henüz bir ürün eklemediniz.</p>
+    }
+    else
+    {
+        <h5 id="urunadet"> @Model.Count() Adet Ürün Listeleniyor</h5>
+    }
 </center>
 
 
 <a href="/Product/StoreOrder/" class="btn border-0 btn-primary">Gelen Siparişler&nbsp;<i class="fa fa-money"></i></a>
 &nbsp;
 
-<button class="btn border-0 btn-success" data-toggle="modal" data-target="#urneklemdl">Yeni Ürün Kayıt&nbsp;<i class="fa fa-plus"></i></button>
+<a href="/Product/Addpro/" class="btn border-0 btn-success">Yeni Ürün Kayıt&nbsp;<i class="fa fa-plus"></i></a>
 
 <br />
 <br />
@@ -49,45 +47,45 @@
 @if (Model.Count() != 0)
 {
 
-   <center style="font-family:'Segoe UI'" class="text-center">
-      <div class="container col-md-12">
-         <table class="col-md-12 table table-sm table-hover" id="tablem">
-            <thead>
-               <tr>
-                  <td>Görsel</td>
-                  <td>Ürün Adı</td>
-                  <td>Fiyat</td>
-                  <td>Stok (Adet)</td>
-                  <td>İşlemler</td>
-               </tr>
-            </thead>
-            <tbody id="verim">
-               @foreach (var item in Model)
-               {
-                  <tr>
-                     <td> <img src="@item.PhotoUrl" width="45" height="45" /> </td>
-                     <td width="35%"><a href="/Product/Detay/@item.ProductId">@item.Name ...</a></td>
-                     <td>@item.Price ₺</td>
-                     <td>@item.Stock</td>
-                     <td>
-                        @if (item.Status == false)
-                        {
-                           <a href="#" data-id="@item.ProductId" data-name="@item.Name" class="btn btn-warning btn-sm" id="delbtnprd">Satışa Kapalı&nbsp; <i class="fa fa-times"></i></a>
-                        }
-                        else
-                        {
-                           <a href="#" data-id="@item.ProductId" data-name="@item.Name" class="btn btn-success btn-sm" id="delbtnprd">Yayında&nbsp; <i class="fa fa-check"></i></a>
-                        }
-                        @*<button class="btn btn-primary btn-sm" data-target="#modal1" data-toggle="modal" data-id="@item.ProductId" id="editbtnprd" type="button">Düzenle&nbsp;<i class="fa fa-edit"></i></button>*@
-                        <a href="/Product/ProductEdit/@item.ProductId" class="btn btn-primary btn-sm">Düzenle&nbsp;<i class="fa fa-edit"></i></a>
-                        <button class="btn btn-info btn-sm" data-name="@item.Name" data-target="#modal2" data-toggle="modal" data-id="@item.ProductId" id="editphotobtn" type="button">Görseller&nbsp;<i class="fa fa-arrow-right"></i></button>
-                     </td>
-                  </tr>
-               }
-            </tbody>
-         </table>
-      </div>
-   </center>
+    <center style="font-family:'Segoe UI'" class="text-center">
+        <div class="container col-md-12">
+            <table class="col-md-12 table table-sm table-hover" id="tablem">
+                <thead>
+                    <tr>
+                        <td>Görsel</td>
+                        <td>Ürün Adı</td>
+                        <td>Fiyat</td>
+                        <td>Stok (Adet)</td>
+                        <td>İşlemler</td>
+                    </tr>
+                </thead>
+                <tbody id="verim">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td> <img src="@item.PhotoUrl" width="45" height="45" /> </td>
+                            <td width="35%"><a href="/Product/Detay/@item.ProductId">@item.Name ...</a></td>
+                            <td>@item.Price ₺</td>
+                            <td>@item.Stock</td>
+                            <td>
+                                @if (item.Status == false)
+                                {
+                                    <a href="#" data-id="@item.ProductId" data-name="@item.Name" class="btn btn-warning btn-sm" id="delbtnprd">Satışa Kapalı&nbsp; <i class="fa fa-times"></i></a>
+                                }
+                                else
+                                {
+                                    <a href="#" data-id="@item.ProductId" data-name="@item.Name" class="btn btn-success btn-sm" id="delbtnprd">Yayında&nbsp; <i class="fa fa-check"></i></a>
+                                }
+                                @*<button class="btn btn-primary btn-sm" data-target="#modal1" data-toggle="modal" data-id="@item.ProductId" id="editbtnprd" type="button">Düzenle&nbsp;<i class="fa fa-edit"></i></button>*@
+                                <a href="/Product/ProductEdit/@item.ProductId" class="btn btn-primary btn-sm">Düzenle&nbsp;<i class="fa fa-edit"></i></a>
+                                <button class="btn btn-info btn-sm" data-name="@item.Name" data-target="#modal2" data-toggle="modal" data-id="@item.ProductId" id="editphotobtn" type="button">Görseller&nbsp;<i class="fa fa-arrow-right"></i></button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </center>
 
 }
 
@@ -97,153 +95,90 @@
 <script type="text/javascript">
 
 
-   $(document).ready(function () {
-      $("#tablem").DataTable();
-   });
+    $(document).ready(function () {
+        $("#tablem").DataTable();
+    });
 
 
-   $(document).on("click", "#btnupd", function () {
-      $("#tablem").load(window.location.href + " #tablem");
-   });
+    $(document).on("click", "#btnupd", function () {
+        $("#tablem").load(window.location.href + " #tablem");
+    });
 
 
-   $(document).on("click", "#editbtnprd", function () {
-      var datid = $(this).data("id");
-      $('#productedit').load('@Url.Action("ProductEdit", "Product")?id=' + datid);
-   });
+    $(document).on("click", "#editbtnprd", function () {
+        var datid = $(this).data("id");
+        $('#productedit').load('@Url.Action("ProductEdit", "Product")?id=' + datid);
+    });
 
 
-   $(document).on("click", "#editphotobtn", function () {
-      var datid = $(this).data("id");
-      var modalhead = $(this).data("name");
-      document.getElementById("photomodalhead").innerHTML = modalhead;
-      $('#photosedit').load('@Url.Action("ProductPhotoEdit", "Product")?id=' + datid);
-   });
+    $(document).on("click", "#editphotobtn", function () {
+        var datid = $(this).data("id");
+        var modalhead = $(this).data("name");
+        document.getElementById("photomodalhead").innerHTML = modalhead;
+        $('#photosedit').load('@Url.Action("ProductPhotoEdit", "Product")?id=' + datid);
+    });
 
 
-   $(document).on("click", "#delbtnprd", function () {
-      var id = $(this).data("id");
-      var name = $(this).data("name");
-      swal({
-         title: "Ürün Durumu Değiştirilecektir?",
-         text: "Ürün Bilgisi : " + name,
-         icon: "warning",
-         buttons: true,
-         dangerMode: true,
-      })
-         .then((willDelete) => {
-            if (willDelete) {
-               $.ajax({
-                  type: "get",
-                  url: "/Product/Delete?id=" + id,
-                  success: function (funk) {
-                     $("#tablem").load(window.location.href + " #tablem");
-                     swal("İşlem başarılı");
-                  }
-               });
-            }
-         });
-   });
-
-
-   function Ajaxpost(formdata) {
-      var ajaxconfig = {
-         type: "post",
-         url: "/Product/Addpro/",
-         data: new FormData(formdata),
-         success: function (result) {
-            swal("", "Ürün Başarıyla Eklendi.Vitrinde sergilenmesi için yayına açık hale getirmeniz gerekmektedir", "success");
-            $("#tablem").load(window.location.href + " #tablem");
-            $("form")[0].reset();
-            $("form")[1].reset();
-            $("form")[2].reset();
-            $("#urneklemdl").modal("hide");
-         }
-      };
-      if ($(formdata).attr('enctype') == "multipart/form-data") {
-         ajaxconfig["contentType"] = false;
-         ajaxconfig["processData"] = false;
-      }
-      $.ajax(ajaxconfig);
-      return false;
-   };
-
+    $(document).on("click", "#delbtnprd", function () {
+        var id = $(this).data("id");
+        var name = $(this).data("name");
+        swal({
+            title: "Ürün Durumu Değiştirilecektir?",
+            text: "Ürün Bilgisi : " + name,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "get",
+                        url: "/Product/Delete?id=" + id,
+                        success: function (funk) {
+                            $("#tablem").load(window.location.href + " #tablem");
+                            swal("İşlem başarılı");
+                        }
+                    });
+                }
+            });
+    });
 
 
 </script>
 
 
 
-<div class="modal fade" id="urneklemdl" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-   <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"> <img width="30" height="30" src="https://static.thenounproject.com/png/485101-200.png" />   &nbsp;Ürün Kayıt Ekranı</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-               <span aria-hidden="true">&times;</span>
-            </button>
-         </div>
-         <div class="modal-body col-md-12">
-            <center>
-               <form method="post" id="urunmodal" onsubmit="return Ajaxpost(this)" enctype="multipart/form-data">
-                  <div class="row">
-                     <div class="col-lg-6">
-                        <input type="text" placeholder="Ürün Adı" class="form-control form-control-sm" minlength="10" name="Name" required />
-                        <br />   <input type="text" placeholder="Ürün Fiyat" class="form-control form-control-sm" name="Price" required />
-                        <br />  <input type="text" placeholder="Stok Adet" class="form-control form-control-sm" name="Stock" required />
-                        <br />  <input type="file" placeholder="Ürün Resmi" class="form-control form-control-sm" name="Photo" required />
-                        <br />  <textarea name="Description" placeholder="Ürün Açıklaması" maxlength="250" minlength="11" class="form-control form-control-sm" required></textarea>
-                     </div>
-                     <div class="col-lg-6">
-                        @Html.DropDownList("SubCatID", (List<SelectListItem>)ViewBag.subcat, null, new { @class = "form-control form-control-sm" })
-                        <br /> @Html.DropDownList("BrandID", (List<SelectListItem>)ViewBag.brand, null, new { @class = "form-control form-control-sm" })
-                        @*<br />   @Html.DropDownList("CategoryID", (List<SelectListItem>)ViewBag.category, null, new { @class = "form-control " })*@
-                        <br /><input type="number" value="0" placeholder="İndirim Yüzde" class="form-control form-control-sm" min="0" max="99" name="Discount" />
-                        <br /><input type="number" value="0" placeholder="Sepet İndirim Yüzde" class="form-control form-control-sm" min="0" max="99" name="BasketDiscount" />
-                        <br />
-                        <button type="submit" id="addajax" class="btn btn-sm btn-primary">Ürünü Kaydet <i class="fa fa-check"></i></button>
-                        <button type="button" class="btn btn-sm  btn-secondary" data-dismiss="modal">Vazgeç</button>
-                     </div>
-                  </div>
-               </form>
-            </center>
-         </div>
-      </div>
-   </div>
-</div>
-
-
 
 <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-   <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-edit"></i>&nbsp;Ürün Güncelleme Formu</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-               <span aria-hidden="true">&times;</span>
-            </button>
-         </div>
-         <div class="modal-body" id="productedit">
-         </div>
-      </div>
-   </div>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-edit"></i>&nbsp;Ürün Güncelleme Formu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="productedit">
+            </div>
+        </div>
+    </div>
 </div>
 
 
 
 <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-   <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-         <div class="modal-header">
-            <h5 class="modal-title" id="photomodalhead"> <i class="fa fa-image"></i> &nbsp;  Ürün Görselleri Formu</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-               <span aria-hidden="true">&times;</span>
-            </button>
-         </div>
-         <div class="modal-body" id="photosedit">
-         </div>
-      </div>
-   </div>
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="photomodalhead"> <i class="fa fa-image"></i> &nbsp;  Ürün Görselleri Formu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="photosedit">
+            </div>
+        </div>
+    </div>
 </div>
 
 

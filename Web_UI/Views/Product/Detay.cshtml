@@ -1,7 +1,4 @@
 ﻿@model Product
-
-
-
 @using Entities.Concrete;
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<AppUser> SignInManager
@@ -12,8 +9,6 @@
     ViewData["Title"] = "Detay";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
 
 
 <div class="container">
@@ -33,12 +28,9 @@
                     {
                         <img width="250" id="imgprd" height="250" src="@Model.PhotoUrl" />
                     }
-
                     <div class="row">
                         <div class="col-md-12">
-
                             <img src="@Model.PhotoUrl" data-id="@Model.PhotoUrl" id="imgbtn" width="65" height="65">
-
                             @foreach (var item in ViewBag.Prdimages)
                             {
                                 <b>&nbsp;&nbsp;&nbsp;</b>
@@ -46,7 +38,6 @@
                             }
                         </div>
                     </div>
-
                 </article>
             </aside>
             <aside class="col-sm-7">
@@ -59,12 +50,11 @@
                     {
                         <h4 style="color:lightseagreen">Sepette Ek %@Model.BasketDiscount İndirim</h4>
                     }
-
                     <h5 class="title mb-2">@Model.Name</h5>
                     <span class="price h3 text-primary">
                         <span class="currency">₺</span><span class="num">@Model.Price</span>
                     </span>
-                    <span>/Birim</span>
+                    <span>/ Birim Fiyat</span>
                     <br />
                     <strong>Marka : </strong><a style="color:black" data-id="@Model.BrandID" href="/Product/BrandProductList/@Model.BrandID">@TempData["Brand"]</a><br />
                     <strong>Satıcı : </strong><a style="color:black" href="/Product/StoreProductist/@Model.Id">@TempData["Store"]</a>
@@ -72,7 +62,6 @@
                         <dt>Ürün Açıklama</dt>
                         <dd><p>@Model.Description</p></dd>
                     </dl>
-
                     @if (Model.Stock <= 0)
                     {
                         <div class="alert alert-dark" role="alert">
@@ -89,82 +78,66 @@
                     {
                         <div class="row">
                             <div class="col-sm-5">
-                                @*<dl class="param param-inline">
-                                        <dt>Adet: </dt>
-                                        <dd>
-                                            <input type="number" max="5" min="1" id="Adet" class="form-control" />
-                                        </dd>
-                                    </dl>*@
-                            </div>
+                                                          </div>
                         </div>
                         <button href="#" type="button" id="addcartbtn" style="background-color:orangered;color:white" class="btn text-uppercase"> <i class="fa fa-shopping-cart"></i> Sepete Ekle </button>
                     } <br /><br />
                 </article>
-
                 <input hidden class="form-control" id="prodid" value="@Model.ProductId" />
-
                 @if (Globals.LoginStatus != 0)
                 {
                     <button href="#" type="button" id="addfavobtn" style="margin-top:0px;margin-right:0px;background-color:aliceblue;color:black" class="btn"> <i class="fa fa-heart"></i>&nbsp;Favorilerime Ekle </button>
-
                 }
                 else
                 {
                     <small>Favorilere eklemek için giriş yapın.</small>
                 }
-
             </aside>
         </div>
     </div>
 </div>
 
-
+<br />
 <div id="prdcomments" class="card">
     <h4>Yorumlar (@ViewBag.commentcount)&nbsp;<i class="fa fa-comment"></i></h4>
-
     @if (Globals.LoginStatus == 1)
     {
         <div class="col-md-8">
             <textarea class="form-control form-control-sm" minlength="3" maxlength="200" id="commtxt" placeholder="birşeyler yazın"></textarea>
             <button class="btn btn-info btn-sm" type="button" id="sendcomm">Yorum yap&nbsp; <i class="fa fa-pencil"></i></button>
-        </div><br />
+        </div>
+        <br />
     }
     else
     {
         <small>Yorum yapmak için giriş yapmalısınız.</small>
     }
-
     @if (ViewBag.commentcount == 0)
     {
         <small>Ürüne ait herhangi bir yorum yapılmadı</small>
     }
     else
     {
-        
         @foreach (var item in ViewBag.comments)
         {
             <b style="background-color:ghostwhite"> •@item.AppUser.NameSurname :   @item.CommContent (@item.CommDate)    </b>
         }
     }
-
 </div>
-
-
 
 
 
 <script type="text/javascript">
 
-
     $(document).on("click", "#sendcomm", function () {
         var comtext = $("#commtxt").val();
         var prdid = $("#prodid").val();
- 
+
         if (document.getElementById("commtxt").value == "") {
             alert("Boş yorum yapılamaz");
         }
-        if (comtext.length<4) {
-            swal("","Yorum için en az 4 karakter girmelisiniz");
+        if (comtext.length < 4) {
+            swal("", "Yorum için en az 4 karakter girmelisiniz");
         }
 
         if (comtext.length > 3) {
@@ -182,18 +155,14 @@
                 }
             });
         }
-
-
-
-
     });
 
 
     $(document).on("click", "#imgbtn", function () {
         var imgdata = $(this).data("id");
         document.getElementById("imgprd").src = imgdata;
-
     });
+
 
     $(document).on("click", "#addfavobtn", function () {
         var datid = $("#prodid").val();
@@ -214,6 +183,7 @@
         });
     });
 
+
     $(document).on("click", "#addcartbtn", function () {
         var datid = $("#prodid").val();
         $.ajax({
@@ -230,8 +200,5 @@
         });
     });
 
-
 </script>
-
-
 
