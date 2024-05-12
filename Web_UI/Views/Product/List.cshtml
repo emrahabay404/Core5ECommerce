@@ -78,7 +78,7 @@
                                 }
                                 @*<button class="btn btn-primary btn-sm" data-target="#modal1" data-toggle="modal" data-id="@item.ProductId" id="editbtnprd" type="button">Düzenle&nbsp;<i class="fa fa-edit"></i></button>*@
                                 <a href="/Product/ProductEdit/@item.ProductId" class="btn btn-primary btn-sm">Düzenle&nbsp;<i class="fa fa-edit"></i></a>
-                                <button class="btn btn-info btn-sm" data-name="@item.Name" data-target="#modal2" data-toggle="modal" data-id="@item.ProductId" id="editphotobtn" type="button">Görseller&nbsp;<i class="fa fa-arrow-right"></i></button>
+                                <a class="btn btn-info btn-sm" href="/Product/ProductPhotoEdit/@item.ProductId">Görseller&nbsp;<i class="fa fa-arrow-right"></i></a>
                             </td>
                         </tr>
                     }

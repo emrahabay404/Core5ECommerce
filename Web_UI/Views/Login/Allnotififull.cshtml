@@ -5,9 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<br />
 
 <h5>Tüm Bildirimler (@Model.Count()) <i class="fa fa-bell-o"></i></h5>
-<div class="container" >
+<div class="container">
 
     @if (Model.Count() == 0)
     {
@@ -15,48 +16,39 @@
     }
     else
     {
-
-    @if (ViewBag.allseen == true)
-    {
-        <h6>Hepsini gördün...</h6> <br />
-    }
-
-    <table style="font-family:'Yu Gothic UI';font-size:20px" class="table table-borderless table-sm table-hover">
-        <tr>
-            <th></th>
-            <th></th>
-
-            <th></th>
-            <th></th>
-
-            <td></td>
-        </tr>
-        <tbody>
-            @foreach (var item in Model)
-            {
+        @if (ViewBag.allseen == true)
+        {
+            <h6>Hepsini gördün...</h6> <br />
+        }
+        <table style="font-family:'Yu Gothic UI';font-size:20px" class="table table-borderless table-sm table-hover">
             <tr>
-                <td><img src="@item.NotifiType.NotifiTypeImg" width="25" height="25" /></td>
-                <td> &nbsp; @item.NotifiType.NotifiTypeName </td>
-                <td>
-                    @if (item.SeenStatus == false)
-                    {
-                        <img src="https://icons.veryicon.com/png/o/internet--web/property-2/closed-eyes.png" width="25" height="25" />
-                    }
-                    else
-                    {
-                        <img src="https://cdn-icons-png.flaticon.com/512/5062/5062897.png" width="25" height="25" />
-                    }
-                </td>
-                <td>@item.NotifiDate.ToLongDateString() : @item.NotifiDate.ToLongTimeString()</td>
-                <td><a onclick="return confirm('Silmek istiyor musun?')" href="/Login/Notifiremove/@item.NotifiID" class="btn btn-outline-danger border-0"><i class="fa fa-trash"></i></a></td>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <td></td>
             </tr>
-            }
-        </tbody>
-
-
-    </table>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><img src="@item.NotifiType.NotifiTypeImg" width="25" height="25" /></td>
+                        <td> &nbsp; @item.NotifiType.NotifiTypeName </td>
+                        <td>
+                            @if (item.SeenStatus == false)
+                            {
+                                <img src="https://icons.veryicon.com/png/o/internet--web/property-2/closed-eyes.png" width="25" height="25" />
+                            }
+                            else
+                            {
+                                <img src="https://cdn-icons-png.flaticon.com/512/5062/5062897.png" width="25" height="25" />
+                            }
+                        </td>
+                        <td>@item.NotifiDate.ToLongDateString() : @item.NotifiDate.ToLongTimeString()</td>
+                        <td><a onclick="return confirm('Silmek istiyor musun?')" href="/Login/Notifiremove/@item.NotifiID" class="btn btn-outline-danger border-0"><i class="fa fa-trash"></i></a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     }
-
 </div>
-
-

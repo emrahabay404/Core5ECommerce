@@ -316,8 +316,7 @@ namespace Web_UI.Controllers
             pt.ProductId = productid;
             pt.Status = true;
             photoRepo.TAdd(pt);
-
-            return Redirect("/Product/List");
+            return Redirect("/Product/ProductPhotoEdit/" + productid);
         }
 
         [HttpGet]

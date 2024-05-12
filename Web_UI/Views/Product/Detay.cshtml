@@ -4,21 +4,31 @@
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 
-
 @{
     ViewData["Title"] = "Detay";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+            .zoom:hover {
+            -ms-transform: scale(1.5); /* IE 9 */
+            -webkit-transform: scale(1.5); /* Safari 3-8 */
+            transform: scale(1.5);
+        }
+</style>
+
+<br />
 <div class="container">
     <div class="card">
         <div class="row">
             <aside class="col-sm-5 border-right">
                 <article class="gallery-wrap">
-
                     <h6>Satış Adeti : @Model.BuyCount</h6>
-
                     @if (Model.PhotoUrl == null || Model.PhotoUrl == "")
                     {
                         <small>Kapak Fotoğrafı Bulunamadı</small>
@@ -30,11 +40,11 @@
                     }
                     <div class="row">
                         <div class="col-md-12">
-                            <img src="@Model.PhotoUrl" data-id="@Model.PhotoUrl" id="imgbtn" width="65" height="65">
+                            <img class="zoom" src="@Model.PhotoUrl" data-id="@Model.PhotoUrl" id="imgbtn" width="65" height="65">
                             @foreach (var item in ViewBag.Prdimages)
                             {
                                 <b>&nbsp;&nbsp;&nbsp;</b>
-                                <img src="@item.PhotoLink" data-id="@item.PhotoLink" id="imgbtn" width="65" height="65">
+                                <img class="zoom" src="@item.PhotoLink" data-id="@item.PhotoLink" id="imgbtn" width="65" height="65">
                             }
                         </div>
                     </div>
@@ -78,7 +88,7 @@
                     {
                         <div class="row">
                             <div class="col-sm-5">
-                                                          </div>
+                            </div>
                         </div>
                         <button href="#" type="button" id="addcartbtn" style="background-color:orangered;color:white" class="btn text-uppercase"> <i class="fa fa-shopping-cart"></i> Sepete Ekle </button>
                     } <br /><br />
@@ -96,6 +106,7 @@
         </div>
     </div>
 </div>
+
 
 <br />
 <div id="prdcomments" class="card">
