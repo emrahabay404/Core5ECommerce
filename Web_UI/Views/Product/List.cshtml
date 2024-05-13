@@ -4,10 +4,8 @@
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 
-
 @*@using X.PagedList
 @using X.PagedList.Mvc.Core*@
-
 
 <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css" />
 
@@ -78,7 +76,7 @@
                                 }
                                 @*<button class="btn btn-primary btn-sm" data-target="#modal1" data-toggle="modal" data-id="@item.ProductId" id="editbtnprd" type="button">Düzenle&nbsp;<i class="fa fa-edit"></i></button>*@
                                 <a href="/Product/ProductEdit/@item.ProductId" class="btn btn-primary btn-sm">Düzenle&nbsp;<i class="fa fa-edit"></i></a>
-                                <a class="btn btn-info btn-sm" href="/Product/ProductPhotoEdit/@item.ProductId">Görseller&nbsp;<i class="fa fa-arrow-right"></i></a>
+                                <a id="editphotobtn" class="btn btn-info btn-sm" href="/Product/ProductPhotoEdit/@item.ProductId">Görseller&nbsp;<i class="fa fa-arrow-right"></i></a>
                             </td>
                         </tr>
                     }
@@ -145,40 +143,5 @@
 
 
 </script>
-
-
-
-
-<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-edit"></i>&nbsp;Ürün Güncelleme Formu</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="productedit">
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="photomodalhead"> <i class="fa fa-image"></i> &nbsp;  Ürün Görselleri Formu</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="photosedit">
-            </div>
-        </div>
-    </div>
-</div>
 
 

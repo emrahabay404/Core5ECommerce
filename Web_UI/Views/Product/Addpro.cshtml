@@ -3,7 +3,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Addpro</h1>
+<br />
+<h1>Yeni Ürün Kaydı   <img width="30" height="30" src="https://static.thenounproject.com/png/485101-200.png" />       </h1>
 
 
 <form method="post" id="urunmodal" onsubmit="return Ajaxpost(this)" enctype="multipart/form-data">
@@ -18,7 +19,6 @@
         <div class="col-lg-6">
             @Html.DropDownList("SubCatID", (List<SelectListItem>)ViewBag.subcat, null, new { @class = "form-control form-control-sm" })
             <br /> @Html.DropDownList("BrandID", (List<SelectListItem>)ViewBag.brand, null, new { @class = "form-control form-control-sm" })
-            @*<br />   @Html.DropDownList("CategoryID", (List<SelectListItem>)ViewBag.category, null, new { @class = "form-control " })*@
             <br /><input type="number" value="0" placeholder="İndirim Yüzde" class="form-control form-control-sm" min="0" max="99" name="Discount" />
             <br /><input type="number" value="0" placeholder="Sepet İndirim Yüzde" class="form-control form-control-sm" min="0" max="99" name="BasketDiscount" />
             <br />
@@ -30,27 +30,7 @@
 
 
 
-<div class="modal fade" id="urneklemdl" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> <img width="30" height="30" src="https://static.thenounproject.com/png/485101-200.png" />   &nbsp;Ürün Kayıt Ekranı</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body col-md-12">
-                <center>
-                </center>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
 <script type="text/javascript">
-
 
     function Ajaxpost(formdata) {
         var ajaxconfig = {
@@ -58,12 +38,8 @@
             url: "/Product/Addpro/",
             data: new FormData(formdata),
             success: function (result) {
-                swal("", "Ürün Başarıyla Eklendi.Vitrinde sergilenmesi için yayına açık hale getirmeniz gerekmektedir", "success");
-               // $("#tablem").load(window.location.href + " #tablem");
-                $("form")[0].reset();
-                $("form")[1].reset();
+                swal("Bilgi", "Ürün Başarıyla Eklendi.Vitrinde sergilenmesi için yayına açık hale getirmeniz gerekmektedir", "success");
                 $("form")[2].reset();
-               // $("#urneklemdl").modal("hide");
             }
         };
         if ($(formdata).attr('enctype') == "multipart/form-data") {
@@ -73,7 +49,5 @@
         $.ajax(ajaxconfig);
         return false;
     };
-
-
 
 </script>
