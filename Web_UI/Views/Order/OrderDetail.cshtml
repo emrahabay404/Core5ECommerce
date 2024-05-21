@@ -2,105 +2,105 @@
 @model IEnumerable<OrderDetail>
 
 @{
-   //Layout = null;
-   Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 @foreach (var item in Model)
 {
-   <input hidden value="@item.OrderId" id="orderidpdf" />
+    <input hidden value="@item.OrderId" id="orderidpdf" />
 }
 
 @if (Model == null || Model.Count() == 0)
 {
-   <p>Sipariş Detay Bulunamadı</p>
+    <p>Sipariş Detay Bulunamadı</p>
 }
 
 else
 {
-   <center>
-      <h4> <i class="fa fa-bookmark"></i> @ViewBag.Orderno Nolu Sipariş Detay</h4>
-   </center>
-   <br />
-   <table class="table table-sm table-hover col-md-12">
-      <tr>
-         <th></th>
-         <th></th>
-         <th>Ürün</th>
-         <th>Adet</th>
-         <th>Fiyat</th>
-         <th>Ara Toplam</th>
-         <th>Sipariş Durumu</th>
-      </tr>
-      <tbody>
-         @foreach (var item in Model)
-         {
+    <center>
+        <h4> <i class="fa fa-bookmark"></i> @ViewBag.Orderno Nolu Sipariş Detay</h4>
+    </center>
+    <br />
+    <table class="table table-sm table-hover col-md-12">
+        <tr>
+            <th></th>
+            <th></th>
+            <th>Ürün</th>
+            <th>Adet</th>
+            <th>Fiyat</th>
+            <th>Ara Toplam</th>
+            <th>Sipariş Durumu</th>
+        </tr>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @if (item.OrderProcessID == 1)
+                    {
+                        <td><button id="btnordercancel" data-id="@item.OrderDetailId" class="btn border-0 btn-sm btn-outline-danger"><i class="fa fa-times"></i></button></td>
+                    }
+                    @if (item.OrderProcessID == 12)
+                    {
+                        <td><button class="btn btn-sm btn-success">Tekrar Al&nbsp;<i class="fa fa-refresh"></i></button> </td>
+                    }
+                    @if (item.OrderProcessID != 12 && item.OrderProcessID != 1)
+                    {
+                      <td></td>
+                    }
+                    <td width="10%"> <img src="@item.Product.PhotoUrl" width="30" height="30" /></td>
+                    <td> <a href="/Product/Detay/@item.ProductId">@item.Product.Name </a></td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Price ₺</td>
+                    <td>@(item.Quantity * item.Price) ₺</td>
+                    <td>
+                        <img src="@item.OrderProcess.OrderProcessImg" width="30" height="30" />
+                        @item.OrderProcess.OrderProcessType
+                    </td>
+                </tr>
+            }
             <tr>
-               @if (item.OrderProcessID == 6)
-               {
-                  <td><button id="btnordercancel" data-id="@item.OrderDetailId" class="btn border-0 btn-sm btn-outline-danger"><i class="fa fa-times"></i></button></td>
-               }
-               @if (item.OrderProcessID == 12)
-               {
-                  <td><button class="btn btn-sm btn-success">Tekrar Al&nbsp;<i class="fa fa-refresh"></i></button> </td>
-               }
-               @if (item.OrderProcessID != 12 && item.OrderProcessID != 6)
-               {
-                  <td></td>
-               }
-               <td width="10%"> <img src="@item.Product.PhotoUrl" width="30" height="30" /></td>
-               <td> <a href="/Product/Detay/@item.ProductId">@item.Product.Name </a></td>
-               <td>@item.Quantity</td>
-               <td>@item.Price ₺</td>
-               <td>@(item.Quantity * item.Price) ₺</td>
-               <td>
-                  <img src="@item.OrderProcess.OrderProcessImg" width="30" height="30" />
-                  @item.OrderProcess.OrderProcessType
-               </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><b>Toplam Tutar: @ViewBag.total ₺ </b></td>
             </tr>
-         }
-         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><b>Toplam Tutar: @ViewBag.total ₺ </b></td>
-         </tr>
-      </tbody>
-   </table>
+        </tbody>
+    </table>
 }
 
 
 <script type="text/javascript">
 
-   $(document).on("click", "#btnordercancel", function () {
-      var datid = $(this).data("id");
-      swal({
-         title: "Sipariş İptal Edilsin Mi?",
-         text: "Bu sipariş sadece bu aşamada iptal edilebilir ve fiyat değişikliklerinde iptal edilen fiyattaki tutar geçerliliğini yitirir.",
-         icon: "warning",
-         buttons: true,
-         dangerMode: true,
-      })
-         .then((willDelete) => {
-            if (willDelete) {
-               $.ajax({
-                  type: "get",
-                  url: "/Order/OrderCancel?id=" + datid,
-                  success: function (funk) {
-                     $("#tablem").load(window.location.href + " #tablem");
-                     swal("Siparişiniz İptal Edildi", "");
-                  },
-                  error: function (funnk) {
-                     swal("İşlem sırasında hata oluştu.");
-                  }
-               });
-            }
-         });
-   });
+    $(document).on("click", "#btnordercancel", function () {
+        var datid = $(this).data("id");
+        swal({
+            title: "Sipariş İptal Edilsin Mi?",
+            text: "Bu sipariş sadece bu aşamada iptal edilebilir ve fiyat değişikliklerinde iptal edilen fiyattaki tutar geçerliliğini yitirir.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "get",
+                        url: "/Order/OrderCancel?id=" + datid,
+                        success: function (funk) {
+                            $("#tablem").load(window.location.href + " #tablem");
+                            swal("Siparişiniz İptal Edildi", "");
+                        },
+                        error: function (funnk) {
+                            swal("İşlem sırasında hata oluştu.");
+                        }
+                    });
+                }
+            });
+    });
 
 
 </script>

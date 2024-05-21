@@ -77,11 +77,11 @@ namespace Web_UI.Controllers
             Notification nts = new();
             nts.Id = bbb;
             nts.NotifiDate = Convert.ToDateTime(DateTime.Now.ToLongTimeString());
-            nts.NotifiTypeID = 9;
+            nts.NotifiTypeID = 10;
             nts.SeenStatus = false;
             C.Notifications.Add(nts); C.SaveChanges();
             var values = orderDetail.TGet(id);
-            values.OrderProcessID = 13;
+            values.OrderProcessID = 5;
             orderDetail.TUpdate(values);
             return Redirect("/Order/Orderlist/");
         }
