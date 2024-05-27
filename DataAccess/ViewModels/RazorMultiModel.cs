@@ -2,7 +2,7 @@
 
 namespace DataAccess.ViewModels
 {
-   public class RazorMultiModel
+    public class RazorMultiModel
     {
         public IEnumerable<Product>  Products { get; set; }
         public IEnumerable<OrderDetail>  OrderDetails { get; set; }

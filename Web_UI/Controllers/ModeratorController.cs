@@ -11,8 +11,8 @@ using Newtonsoft.Json;
 namespace Web_UI.Controllers
 {
 
-   [Authorize(Roles = "admin,moderator")]
-   public class ModeratorController : Controller
+    [Authorize(Roles = "admin,moderator")]
+    public class ModeratorController : Controller
     {
         private readonly RoleManager<AppRole> _roleManager;
         private readonly UserManager<AppUser> _userManager;
@@ -372,6 +372,7 @@ namespace Web_UI.Controllers
         {
             return View(supportRepo.GetListWith());
         }
+
         [AllowAnonymous]
         [Authorize(Roles = "seller,user")]
         public IActionResult Supportadd(SupportRequest sprequest)

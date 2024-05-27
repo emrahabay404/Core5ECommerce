@@ -1,7 +1,6 @@
 ﻿using DataAccess.Concrete;
 using DataAccess.Repositories;
 using Entities.Concrete;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 

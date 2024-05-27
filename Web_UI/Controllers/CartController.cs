@@ -38,12 +38,9 @@ namespace Web_UI.Controllers
                 TempData["CartCount"] = (int)CartProductCount;
                 var cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
                 ViewBag.cart = cart;
-                //ViewBag.total = cart.Sum(item => item.Product.Price * item.Adet);
+
                 ViewBag.total = cart.Sum(item => (item.Product.Price - (item.Product.Price * (item.Product.Discount + item.Product.BasketDiscount) / 100)) * item.Adet);
                 ViewBag.total = Math.Round(ViewBag.total, 2);
-
-                //var prddel = cart.Where(x => x.Product.Stock < 1).FirstOrDefault();
-                //cart.RemoveAt(prddel.Product.ProductId);
 
                 if (Globals.LoginStatus != 0)
                 {
@@ -116,12 +113,10 @@ namespace Web_UI.Controllers
                 }
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
-            ////////////// burası ile sepetteki ürünleri saydırıp global değişkene attım.
             var say = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             ViewBag.cart = say;
-            //Globals.Sepetadet = say.Sum(x => x.Adet);
             CartProductCount = say.Sum(x => x.Adet);
-            /////////////////
+
             Durum = true;
             return Json(Durum);
         }
@@ -150,12 +145,10 @@ namespace Web_UI.Controllers
                 }
                 SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
             }
-            ////////////// burası ile sepetteki ürünleri saydırıp global değişkene attım.
+
             var say = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             ViewBag.cart = say;
-            //Globals.Sepetadet = say.Sum(x => x.Adet);
             CartProductCount = say.Sum(x => x.Adet);
-            /////////////////
             Durum = true;
             return Json(Durum);
         }
@@ -185,14 +178,13 @@ namespace Web_UI.Controllers
             int index = IsExist(id);
             if (index != -1 && index != 0)
             {
-                cart[id].Adet -= 1;
+                cart[id].Adet = cart[id].Adet - 1;
             }
             else
             {
                 cart.RemoveAt(id);
             }
             SessionHelper.SetObjectAsJson(HttpContext.Session, "cart", cart);
-
             var say = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
             ViewBag.cart = say;
             CartProductCount = say.Sum(x => x.Adet);

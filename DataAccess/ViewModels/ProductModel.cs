@@ -3,15 +3,15 @@ using Entities.Concrete;
 
 namespace DataAccess.ViewModels
 {
-   public class ProductModel
+    public class ProductModel
     {
         public Context C = new();
 
-       public List<Product> Products { get; set; }
+        public List<Product> Products { get; set; }
 
         public List<Product> FindAll()
         {
-            return  C.Products.ToList();
+            return C.Products.ToList();
         }
 
         public Product Find(int id)
@@ -20,8 +20,6 @@ namespace DataAccess.ViewModels
             var prod = _products.Where(a => a.ProductId == id).FirstOrDefault();
             return prod;
         }
-
-
 
     }
 }

@@ -8,7 +8,6 @@ namespace Web_UI.Controllers
     [Authorize(Roles = "admin")]
     public class AdminController : Controller
     {
-
         private readonly RoleManager<AppRole> _roleManager;
         private readonly UserManager<AppUser> _userManager;
 
@@ -59,8 +58,6 @@ namespace Web_UI.Controllers
             }
             return View();
         }
-        //ROLE TABLOSUNDA KÜÇÜK HARFLİ OLAN BİRDE BÜYÜK HARFLE NORMALİZE OLARAK
-        //BÜYÜK TÜRDEN EKLENECEK.
 
         [HttpGet]
         public IActionResult UpdateRole(int id)
@@ -144,6 +141,5 @@ namespace Web_UI.Controllers
             }
             return RedirectToAction("UserRoleList");
         }
-
-    }
+            }
 }
