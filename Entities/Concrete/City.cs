@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Entities.Concrete
 {
@@ -9,11 +8,6 @@ namespace Entities.Concrete
         public int CityID { get; set; }
         public string CityName { get; set; }
         public int CountryID { get; set; }
-
-
-
         public List<Address> Address { get; set; }
-
-
     }
 }
