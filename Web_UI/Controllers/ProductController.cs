@@ -148,7 +148,6 @@ namespace Web_UI.Controllers
             return Redirect("/Product/List/");
         }
 
-
         [HttpGet]
         public IActionResult Addpro()
         {
@@ -345,10 +344,7 @@ namespace Web_UI.Controllers
             {
                 return Redirect("/Account/Login/");
             }
-
-
             int Userid = (int)_userManager.GetUserAsync(User).Result.Id;
-
             return View(productRepo.GetWithStore(Userid));
         }
 
@@ -456,3 +452,4 @@ namespace Web_UI.Controllers
 
     }
 }
+

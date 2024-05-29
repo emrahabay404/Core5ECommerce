@@ -1,5 +1,4 @@
-﻿
-@using Entities.Concrete;
+﻿@using Entities.Concrete;
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
@@ -35,7 +34,7 @@
 <div class="container" id="cnt">
     <div class="col-lg-12" style="font-size:x-large;background-color:aliceblue">
         <button class="btn border-0 btn-outline-info btn-default" id="generalbtn">Genel <img src="https://play-lh.googleusercontent.com/hrBju7zzcoO2Ohimi_v73I9FQ9ImFmx7L5f6EDwhjTYUHVnACZx-t67PEK6nX3FgxA" width="30" height="30" />  </button>
-           &nbsp;<button class="btn border-0 btn-outline-info btn-default" id="walletbtn">Cüzdanım <img src="https://pngimg.com/uploads/wallet/wallet_PNG7511.png" width="30" height="30" />  </button>
+        &nbsp;<button class="btn border-0 btn-outline-info btn-default" id="walletbtn">Cüzdanım <img src="https://pngimg.com/uploads/wallet/wallet_PNG7511.png" width="30" height="30" />  </button>
         &nbsp;<button class="btn border-0 btn-outline-info btn-default" id="pwdbtn">Şifre Değiştir <img src="https://www.seekpng.com/png/detail/430-4307046_forgot-password-icon-png-icon-for-username-and.png" width="30" height="30" />  </button>
         &nbsp;<button class="btn border-0 btn-outline-info btn-default" id="buyerbtn">Satıcı Olmak <img src="https://cdn-icons-png.flaticon.com/512/1924/1924844.png" width="30" height="30" />  </button>
         &nbsp;<button data-target="#modal1" data-toggle="modal" class="btn border-0 btn-outline-info btn-default" id="mailbtn">Mail Adresi <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Envelope-letter-icon.png" width="30" height="30" />  </button>
@@ -161,7 +160,8 @@
                 <button id="reqselcancel" class="btn border-0 btn-warning">Talebimi İptal Et &nbsp;<i class="fa fa-times"></i></button>
             }
             @if (ViewBag.sellerstatus == "accept")
-            {<br />
+            {
+                <br />
                 <p>Zaten satıcısınız. Ürünler ekleyebilir ve sipariş alabilirsiniz.</p>
                 <a class="btn btn-danger" href="/Login/CancelSeller/" onclick="return confirm('Satıcı Üyeliğiniz İptal Edilecektir. Onaylıyor Musunuz?')" id="sellercancel">Satıcı Olmak İstemiyorum&nbsp;<i class="fa fa-user-times"></i></a>
             }
@@ -267,46 +267,46 @@
 
 
     $(document).on("click", "#closesuccalert", function () {
-              $("#succalert").hide();
+        $("#succalert").hide();
     });
 
     $(document).on("click", "#closeerroralert", function () {
         $("#erroralert").hide();
     });
 
-        $(document).on("click", "#usrupdtatebtn", function () {
-            let mydata =
-            {
-                UserName: $("#UserName").val(),
-                NameSurname: $("#NameSurname").val(),
-                PhoneNumber: $("#PhoneNumber").val(),
-                Job: $("#Job").val(),
-                About: $("#About").val()
-            };
-            $.ajax({
-                type: "post",
-                url: "/Login/Userupdate/",
-                data: mydata,
-                async: true,
-                success: function () {
-                    javascript: scroll(0, 0);
-                    $("#succalert").show();
-                    $("#erroralert").hide();
+    $(document).on("click", "#usrupdtatebtn", function () {
+        let mydata =
+        {
+            UserName: $("#UserName").val(),
+            NameSurname: $("#NameSurname").val(),
+            PhoneNumber: $("#PhoneNumber").val(),
+            Job: $("#Job").val(),
+            About: $("#About").val()
+        };
+        $.ajax({
+            type: "post",
+            url: "/Login/Userupdate/",
+            data: mydata,
+            async: true,
+            success: function () {
+                javascript: scroll(0, 0);
+                $("#succalert").show();
+                $("#erroralert").hide();
 
-                },
-                error: function (funk) {
-                    javascript: scroll(0, 0);
-                    $("#erroralert").show();
-                    $("#succalert").hide();
-                }
-            });
+            },
+            error: function (funk) {
+                javascript: scroll(0, 0);
+                $("#erroralert").show();
+                $("#succalert").hide();
+            }
         });
+    });
 
 
     $(document).on("click", "#reqselcancel", function () {
-            swal({
-                title: "Emin Misin?",
-                text: "İşlemi onayladıgınız takdirde ürünleriniz artık vitrinde sergilenmeyecek ve sipariş alamayacaksınız.",
+        swal({
+            title: "Emin Misin?",
+            text: "İşlemi onayladıgınız takdirde ürünleriniz artık vitrinde sergilenmeyecek ve sipariş alamayacaksınız.",
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -317,16 +317,16 @@
                         type: "get",
                         url: "/Login/CancelSellerRequest/",
                         success: function (funk) {
-                            swal("","Satıcı olmak için gönderdiğiniz talep iptal edilmiştir.")
+                            swal("", "Satıcı olmak için gönderdiğiniz talep iptal edilmiştir.")
                                 .then((value) => {
-                                     window.location.href = "@Url.Action("Account", "Login")";
+                                    window.location.href = "@Url.Action("Account", "Login")";
                                 });
-                              }
+                        }
                     });
                 }
             });
 
-        });
+    });
 
 
     $(document).on("click", "#btnchnpwd", function () {

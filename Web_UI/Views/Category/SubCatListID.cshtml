@@ -75,7 +75,6 @@
 <center>   <h5>@TempData["Subcatname"] kategorisinin tüm ürünleri</h5>    </center>
 
 
-
 @if (Model == null || Model.Count() == 0)
 {
     <br />
@@ -107,21 +106,20 @@
 
 
 
-
- <script type="text/javascript">
-     $(document).on("click", "#btnbagadd", function () {
-         var datid = $(this).data("id");
-         $.ajax({
-             contentType: "application/json",
-             dataType: "json",
-             type: "post",
-             url: "/Cart/Ekle?id=" + datid,
-             success: function (func) {
-                 if (func == true) {
-                     swal("Ürün sepete eklendi", "");
-                 }
-                 console.log(func);
-             }
-         });
-     });
- </script>
+<script type="text/javascript">
+    $(document).on("click", "#btnbagadd", function () {
+        var datid = $(this).data("id");
+        $.ajax({
+            contentType: "application/json",
+            dataType: "json",
+            type: "post",
+            url: "/Cart/Ekle?id=" + datid,
+            success: function (func) {
+                if (func == true) {
+                    swal("Ürün sepete eklendi", "");
+                }
+                console.log(func);
+            }
+        });
+    });
+</script>

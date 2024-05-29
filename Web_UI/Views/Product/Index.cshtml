@@ -31,13 +31,16 @@
     <div id="nullproduct">
         <div class="alert alert-danger" role="alert">
             <h4 class="alert-heading">Uyarı</h4>
-            <p> Herhangi bir ürün bulunamadı6.</p>
+            <p> Herhangi bir ürün bulunamadı.</p>
             <hr>
         </div>
     </div>
 }
 else
 {
+    <p>     @Model.Count();  "Adet ürün var"    </p>
+     
+
     <div class="container col-md-12 mt-0">
         <div class="row mb-5" id="productlist">
             @foreach (var item in Model)
