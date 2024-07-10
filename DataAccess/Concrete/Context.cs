@@ -10,7 +10,7 @@ namespace DataAccess.Concrete
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=MYPC;Database=core5etic;Trusted_Connection=true;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=MYPC\\SQLEXPRESS;Database=core5etic;Trusted_Connection=true;TrustServerCertificate=True;");
             //"Server=MYPC\\SQLEXPRESS;Database=Shift_Db33;Trusted_Connection=true;TrustServerCertificate=True;";
         }
 
